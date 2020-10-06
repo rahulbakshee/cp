@@ -1,2 +1,7 @@
-# cp
-Competitive Programming | Coding
+# Competitive Programming - Learning and Implementation 
+
+
+- LeetCode
+- HackerRank
+- ProjectEuler
+
