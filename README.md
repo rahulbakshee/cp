@@ -1,5 +1,4 @@
-# Competitive Programming - Learning and Implementation 
-
+# Competitive Programming 
 
 - LeetCode
 - HackerRank
