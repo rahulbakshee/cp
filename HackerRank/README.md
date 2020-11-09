@@ -1,1 +1,1 @@
-## This contains my solutions to past and ongoing HackerRank problem sets in Python3
+## This contains solutions to past and ongoing HackerRank problem sets in Python3
