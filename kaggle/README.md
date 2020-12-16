@@ -1,1 +1,1 @@
-- [Aerial Cactus Identification]()
+- Aerial Cactus Identification [notebook](https://github.com/rahulbakshee/cp/blob/master/kaggle/kaggle-Aerial_Cactus_Identification.ipynb) || [githubPages](https://rahulbakshee.github.io/iWriteHere/2020/12/11/Aerial-Cactus-Identification-Kaggle.html) || [medium]()
