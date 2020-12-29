@@ -1,8 +1,8 @@
 Data Problem #2: Rejection Reason [Affirm]
 
 If we had access to feature weights, we would 
-- know how much each feature contributes to final classification.
-- have plotted feature importances to know what features are important in case of Decision Tree/Random Forest. 
+- know how much each [feature contributes](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html) to final classification.
+- have plotted [feature importances](https://scikit-learn.org/stable/auto_examples/ensemble/plot_forest_importances.html) to know what features are important in case of Decision Tree/Random Forest. 
 - have plotted the decision tree rules [sklearn.tree](https://scikit-learn.org/stable/auto_examples/tree/plot_unveil_tree_structure.html) for better understanding.
 
 Given that we don't have access to the feature weigths, we would have to find some other ways to give reasons to customers for their rejection. 
