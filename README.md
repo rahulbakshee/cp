@@ -1,4 +1,4 @@
-# Competitive Programming 
+# Competitive Programming (CP)
 - [Kaggle](https://github.com/rahulbakshee/cp/tree/master/kaggle)
 - [LeetCode](https://github.com/rahulbakshee/cp/tree/master/LeetCode)
 - [HackerRank](https://github.com/rahulbakshee/cp/tree/master/HackerRank)
