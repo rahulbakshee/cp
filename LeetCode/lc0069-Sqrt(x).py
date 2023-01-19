@@ -1,7 +1,7 @@
 # https://leetcode.com/problems/sqrtx/
 
-# # bruteforce
-# # space O(1), time O(n)
+# bruteforce
+# space O(1), time O(sqrt(n))
 class Solution:
     def mySqrt(self, x: int) -> int:
         if x in [0, 1]:
