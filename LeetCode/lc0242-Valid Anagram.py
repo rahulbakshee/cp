@@ -32,3 +32,19 @@ class Solution:
             return True
         else:
             return False
+
+
+# space O(1), time O(nlogn) whichever has more len
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        return sorted(t) == sorted(s)
+
+
+
+# space O(s), time O(s)
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        return Counter(t) == Counter(s)
+
+
+
