@@ -1,6 +1,26 @@
 # https://leetcode.com/problems/valid-palindrome/description/
 
-# space: O(1), time O(n)
+# time-O(n), space-O(n)
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        
+        def isInRange(char):
+            if ((ord("0") <= ord(char) <= ord("9")) or
+                (ord("A") <= ord(char) <= ord("Z")) or
+                (ord("a") <= ord(char) <= ord("z"))):
+                return True
+            else:
+                return False
+        
+        news = ""
+        for char in s:
+            if isInRange(char): # alpha-numeric
+                news += char.lower() 
+
+        return news == news[::-1]
+
+
+# time O(n), space: O(1)
 class Solution:
     def isPalindrome(self, s: str) -> bool:
         
