@@ -1,5 +1,5 @@
 # https://leetcode.com/problems/valid-parentheses/
-
+# time:O(n), space:O(n)
 class Solution:
     def isValid(self, s: str) -> bool:
         stack = []
