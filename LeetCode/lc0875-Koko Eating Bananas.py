@@ -21,30 +21,31 @@ class Solution:
 
 
 # binary search
-# space O(1), time O(plogn) -> where p is number of piles and n is max(piles)
+# time:O(p log m) - p is the number of piles, m is the max length of piles
+# space:O(1)
+import math
+
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
-        def condition(capacity) -> bool:
-            hour = 0
+        def feasible(capacity)-> bool:
+            sum_h = 0
             for pile in piles:
-                if pile %capacity ==0: 
-                    hour += (pile // capacity)
-                else:
-                    hour += (pile // capacity) + 1
-
-            if hour <= h:
+                sum_h += math.ceil(pile/capacity)
+            if sum_h <= h:
                 return True
             else:
                 return False
 
+        left , right = 1, max(piles)
 
-        left, right = 1, max(piles)
         while left < right:
             mid = left + (right-left)//2
 
-            if condition(mid):
+            if feasible(mid):
                 right = mid
             else:
                 left = mid + 1
-
         return left
+
+
+
