@@ -2,31 +2,21 @@
 
 
 # # bruteforce, linear, time limit exceeded
-# # space O(1), time O(pn) -> p is number of piles and n is max(piles)
+# time:O(p*m) - where p is the number of piles and m is the max length of piles
+# space:O(1)
+import math
+
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
-        for k in range(min(piles), max(piles)+1):
-            #print("k", k)
+        for cap in range(1, max(piles)+1):
+            sum_h = 0
 
-            curr_h = 0
             for pile in piles:
-                #print("pile", pile, "curr_h", curr_h)
-                rem_ba = pile
+                sum_h += int(math.ceil(pile/cap))
 
-                while rem_ba >= 1:
-                    #print("rem_ba", rem_ba)
-                    if rem_ba <= k:
-                        rem_ba = 0
-                        curr_h += 1
-                        break
-                    if rem_ba > k:
-                        rem_ba -= k
-                        curr_h += 1
-
-            #print("curr_h", curr_h)
-            if curr_h <= h:
-                return k
-
+            if sum_h == h:
+                return cap
+        return cap
 
 
 
