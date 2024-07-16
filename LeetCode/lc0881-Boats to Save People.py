@@ -1,7 +1,7 @@
 
 
 # two pointers
-# time:O(n), space:O(1)
+# time:O(nlogn), space:O(sorting)
 class Solution:
     def numRescueBoats(self, people: List[int], limit: int) -> int:
         people.sort()
