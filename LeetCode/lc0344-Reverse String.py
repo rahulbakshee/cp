@@ -1,4 +1,22 @@
-# two pointers - linear
+# using stack - time:O(n), space:O(n)
+class Solution:
+    def reverseString(self, s: List[str]) -> None:
+        """
+        Do not return anything, modify s in-place instead.
+        """
+        stack = []
+        for char in s:
+            stack.append(char)
+        i = 0
+        while stack:
+            s[i] = stack.pop()
+            i += 1
+            
+        
+
+
+
+# two pointers - time:O(n), space:O(1)
 class Solution:
     def reverseString(self, s: List[str]) -> None:
         """
