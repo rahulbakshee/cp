@@ -39,3 +39,22 @@ class Solution:
 
         head.next = None
         return new_head
+
+
+# recursive - timeO(n), space:O(n)
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        # base case
+        if not head or not head.next:
+            return head
+
+
+        # reverse the rest of the linkedlist and put first element at end
+        rest = self.reverseList(head.next)
+
+        head.next.next = head
+
+        head.next = None
+        return rest
+        
+
