@@ -44,6 +44,25 @@ class Solution:
         else:
             return result
 
+
+
+
+# iterative
+# time: O(logn), space:O(1)
+class Solution:
+    def myPow(self, x: float, n: int) -> float:
+        if n < 0:
+            x = 1/x
+            n = abs(n)
+
+        result =1
+        while n:
+            if n % 2:
+                result = result * x
+            x = x * x
+            n = n//2
+        return result
+
 # x = 2, n = 2 -> 4
 # x = 2, n = -2 -> 1/4
 # x = 2, n = 3 -> 
