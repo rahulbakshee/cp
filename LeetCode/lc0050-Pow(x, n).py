@@ -1,16 +1,49 @@
-# divide and conquer
-# time:O(logn), space:O(1)
+# linear
 class Solution:
     def myPow(self, x: float, n: int) -> float:
-        def helper(x, n):
+        result = 1
+
+        for i in range(abs(n)):
+            result = result * x
+
+        if n < 0:
+            return 1/result
+        else:
+            return result 
+
+
+
+
+
+# divide and conquer
+# time:O(logn), space:O(logn)
+class Solution:
+    def myPow(self, x: float, n: int) -> float:
+        def recurse(x, n):
+            # base case
             if x == 0:
                 return 0
+            if x == 1:
+                return 1
             if n == 0:
                 return 1
+            if n == 1:
+                return x
 
-            res = helper(x, n//2)
-            res = res*res
-            return x*res if n%2 else res
+            result = recurse(x, n//2) # (2, 1)
+            result = result * result # 4
+            # if n is odd
+            if n % 2 == 1:
+                return result * x
+            else: # n is even
+                return result
 
-        res = helper(x, abs(n))
-        return res if n>=0 else 1/res
+        result = recurse(x, abs(n))
+        if n < 0:
+            return 1/ result
+        else:
+            return result
+
+# x = 2, n = 2 -> 4
+# x = 2, n = -2 -> 1/4
+# x = 2, n = 3 -> 
