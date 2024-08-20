@@ -1,22 +1,38 @@
 class Solution:
     def getRow(self, rowIndex: int) -> List[int]:
-        if rowIndex == 0:
-            return [1]
-        
-        result = []
+        prev = []
+        curr = []
         for row in range(rowIndex+1):
-            temp = []
+            curr = []
             for col in range(row+1):
                 if col == 0 or col == row:
-                    temp.append(1)
-                
+                    curr.append(1)
                 else:
-                    val = result[-1][col-1] + result[-1][col] 
-                    temp.append(val)          
+                    val = prev[col-1] + prev[col]
+                    curr.append(val)
+            prev = curr
+
+        return prev
+
+# class Solution:
+#     def getRow(self, rowIndex: int) -> List[int]:
+#         if rowIndex == 0:
+#             return [1]
+        
+#         result = []
+#         for row in range(rowIndex+1):
+#             temp = []
+#             for col in range(row+1):
+#                 if col == 0 or col == row:
+#                     temp.append(1)
                 
-            result.append(temp)         
+#                 else:
+#                     val = result[-1][col-1] + result[-1][col] 
+#                     temp.append(val)          
+                
+#             result.append(temp)         
             
-        return result[-1]
+#         return result[-1]
             
             
             
