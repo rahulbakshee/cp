@@ -17,21 +17,36 @@
 #             prev = curr
 #         return result
 
+# class Solution:
+#     def generate(self, numRows: int) -> List[List[int]]:
+#         result = []
+#         for row in range(numRows):
+#             temp = []
+#             for col in range(row+1):
+#                 if col == 0 or col == row:
+#                     temp.append(1)
+                
+#                 else:
+#                     val = result[-1][col-1] + result[-1][col] 
+#                     temp.append(val)          
+                
+#             result.append(temp)         
+            
+#         return result
+            
+            
+
 class Solution:
     def generate(self, numRows: int) -> List[List[int]]:
         result = []
         for row in range(numRows):
-            temp = []
+            sol = []
             for col in range(row+1):
                 if col == 0 or col == row:
-                    temp.append(1)
-                
+                    sol.append(1)
                 else:
-                    val = result[-1][col-1] + result[-1][col] 
-                    temp.append(val)          
-                
-            result.append(temp)         
-            
+                    val = result[-1][col-1] + result[-1][col]
+                    sol.append(val)
+            result.append(sol)
+
         return result
-            
-            
