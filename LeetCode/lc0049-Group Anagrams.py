@@ -1,5 +1,14 @@
 # https://leetcode.com/problems/group-anagrams/description/
 
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        hashmap = defaultdict(list)
+        for s in strs:
+            sorted_s = "".join(sorted(s))
+            hashmap[sorted_s].append(s)
+            
+        return hashmap.values()
+
 # time - O(n * mlogm), space - O(n)
 # n is the length of input string, m is the average lenght of each word
 class Solution:
