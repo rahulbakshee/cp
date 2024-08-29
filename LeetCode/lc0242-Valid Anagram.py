@@ -46,5 +46,7 @@ class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
         return Counter(t) == Counter(s)
 
-
-
+# NOT SURE
+# Follow up: What if the inputs contain Unicode characters? How would you adapt your solution to such a case?
+# option1 - remove the unicode characters by using s[i].isalpha()
+# option2 - keep unicode characters as well. maybe use ord()
