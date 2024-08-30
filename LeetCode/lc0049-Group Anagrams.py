@@ -1,13 +1,19 @@
 # https://leetcode.com/problems/group-anagrams/description/
-
+# time:O(n*mlogm) - n is the total number of words in strs, m is the avg len of each word in strs
+# space:O(n)
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        hashmap = defaultdict(list)
-        for s in strs:
-            sorted_s = "".join(sorted(s))
-            hashmap[sorted_s].append(s)
-            
-        return hashmap.values()
+        anagram_dict = {}
+        for word in strs:
+            sorted_word = "".join(sorted(word))
+            if sorted_word in anagram_dict:
+                anagram_dict[sorted_word].append(word)
+            else:
+                anagram_dict[sorted_word] = [word]
+        return anagram_dict.values()
+
+
+
 
 # time - O(n * mlogm), space - O(n)
 # n is the length of input string, m is the average lenght of each word
