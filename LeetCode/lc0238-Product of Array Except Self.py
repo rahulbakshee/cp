@@ -1,4 +1,4 @@
-# https://leetcode.com/problems/product-of-array-except-self/description/
+# https://leetcode.com/problems/product-of-array-except-self/solutions/1342916/3-minute-read-mimicking-an-interview/
 
 # using division operator - when there is no zeros in nums. time-O(n), space-O(1)
 class Solution:
