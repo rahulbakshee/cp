@@ -1,13 +1,27 @@
+# using stack - time:O(n), space:O(n)
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not head:
+            return
 
+        # add to stack
+        stack = []
+        while head:
+            stack.append(head)
+            head = head.next
+
+        # remove from stack
+        curr = dummy = ListNode()
+        while stack:
+            curr.next = stack.pop()
+            curr = curr.next
+        curr.next = None            
+
+        return dummy.next
 
 
 # iterative
 # O(n), space:O(1)
-# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val=0, next=None):
-#         self.val = val
-#         self.next = next
 class Solution:
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         prev, curr = None, head
@@ -22,11 +36,6 @@ class Solution:
 
 # recursive
 # time:O(n), space:O(n)
-# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val=0, next=None):
-#         self.val = val
-#         self.next = next
 class Solution:
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         if not head:
@@ -47,7 +56,6 @@ class Solution:
         # base case
         if not head or not head.next:
             return head
-
 
         # reverse the rest of the linkedlist and put first element at end
         rest = self.reverseList(head.next)
