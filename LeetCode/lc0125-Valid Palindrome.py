@@ -1,4 +1,16 @@
-# https://leetcode.com/problems/valid-palindrome/description/
+# time:O(nlogn), space:O(n)
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        if len(s) == 1:
+            return True
+        cleaned = []
+        for char in s:
+            if char.isalnum():
+                cleaned.append(char.lower())
+
+        return cleaned == list(reversed(cleaned))
+
+
 
 # time-O(n), space-O(n)
 class Solution:
