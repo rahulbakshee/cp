@@ -22,3 +22,28 @@ class Solution:
 
         dfs(sr, sc)
         return image
+
+
+
+
+# bfs - time:O(m*n), space:O(m*n)
+from collections import deque
+class Solution:
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
+        rows = len(image)
+        cols = len(image[0])
+        new_color = color
+        curr_color = image[sr][sc]
+
+        if curr_color != new_color:
+            q = deque([(sr,sc)])
+            while q:
+                r, c = q.popleft()
+                image[r][c] = new_color
+
+                for x,y in [(r+1,c), (r-1,c), (r,c+1), (r,c-1)]:
+                    if 0<=x<rows and 0<=y<cols and image[x][y] == curr_color:
+                        q.append((x,y))
+
+
+        return image
