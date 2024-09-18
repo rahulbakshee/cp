@@ -55,5 +55,44 @@ class Solution:
                     curr_area = bfs(i,j)
                     max_area = max(max_area, curr_area)
 
+
+
+
+
+# dfs - stack
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        rows = len(grid)
+        cols = len(grid[0])
+        visited = set()
+        max_area = 0
+
+
+        def dfs(r,c):
+            stack = []
+            stack.append((r,c))
+            visited.add((r,c))
+            area = 0
+
+            while stack:
+                row, col = stack.pop()
+                area += 1
+
+                for x,y in [(row+1,col), (row-1,col), (row,col+1), (row,col-1)]:
+                    if 0<=x<rows and 0<=y<cols and (x,y) not in visited and grid[x][y]:
+                        stack.append((x,y))
+                        visited.add((x,y))
+
+            return area
+
+
+        for i in range(rows):
+            for j in range(cols):
+                if (i,j) not in visited and grid[i][j] == 1:
+                    curr_area = dfs(i,j)
+                    max_area = max(max_area, curr_area)
+        return max_area
+
+
         return max_area
 
