@@ -1,5 +1,8 @@
-#https://neetcode.io/problems/islands-and-treasure
+# https://leetcode.ca/2016-09-11-286-Walls-and-Gates/
+# https://neetcode.io/problems/islands-and-treasure
 # trick is to start from the gate(grid[i][j] == 0
+
+
 # bfs - queue
 import collections
 class Solution:
