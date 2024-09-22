@@ -33,14 +33,10 @@ class Solution:
         left, right = 0, len(nums)-1
 
         while left < right:
-            s = nums[left] + nums[right]
-
-            if s == target:
-                return [left+1, right+1]
-
-            if s < target:
-                left += 1
-            else:
+            if nums[left] + nums[right] > target:
                 right -= 1
-                
-                
+            elif nums[left] + nums[right] < target:
+                left += 1
+            else: # nums[left] + nums[right] == target
+                return [left+1, right+1]
+            
