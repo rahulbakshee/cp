@@ -65,3 +65,34 @@ class Solution:
                 return True
 
         return False
+
+
+
+
+# BETTER AND SAME SOLUTION BUT WITH DICTIONARY
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        n1 = len(s1)
+        n2 = len(s2)
+        if n1>n2:
+            return False
+        
+        freq_s1 = Counter(s1)
+        freq_s2 = Counter(s2[:n1])
+        if freq_s1 == freq_s2:
+            return True
+
+        for i in range(n1, n2):
+            # add new element
+            if s2[i] in freq_s2:
+                freq_s2[s2[i]] += 1
+            else:
+                freq_s2[s2[i]] = 1
+
+            # remove old element
+            freq_s2[s2[i-n1]] -= 1
+
+            if freq_s1 == freq_s2:
+                return True
+
+        return False
