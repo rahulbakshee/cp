@@ -30,3 +30,38 @@ class Solution:
                 right += 1
 
         return False
+
+
+
+# BETTER SOLUTION - OPTIMAL
+# time:O(n) - n-len of s2, space:O(n+m)
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        n1 = len(s1)
+        n2 = len(s2)
+
+        if n1>n2:
+            return False
+
+        # create frequency count of s1, s2
+        freq_s1 = [0] * 26
+        freq_s2 = [0] * 26
+
+        for i in range(len(s1)):
+            freq_s1[ord(s1[i])-ord("a")] += 1
+            freq_s2[ord(s2[i])-ord("a")] += 1
+
+        if freq_s1 == freq_s2:
+            return True
+
+        # create windows of n1 length and iterate ove s2
+        window = n1
+        
+        for i in range(window, len(s2)):
+            freq_s2[ord(s2[i])-ord("a")] += 1
+            freq_s2[ord(s2[i-window])-ord("a")] -= 1
+
+            if freq_s1 == freq_s2:
+                return True
+
+        return False
