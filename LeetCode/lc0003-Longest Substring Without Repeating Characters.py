@@ -60,3 +60,25 @@ class Solution:
             max_len = max(max_len, right-left+1)
 
         return max_len
+
+
+
+
+
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        n = len(s)
+
+        left, right = 0,0
+        seen = set()
+        longest = 0
+
+        while right < n:
+            while s[right] in seen:
+                seen.remove(s[left])
+                left += 1
+            seen.add(s[right])
+            longest = max(longest, right-left+1)
+            right += 1
+
+        return longest         
