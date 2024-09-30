@@ -12,6 +12,34 @@ class Solution:
         return list(map(int, s))
 
 
+# SIMPLER by ME
+class Solution:
+    def plusOne(self, nums: List[int]) -> List[int]:
+        if not nums:
+            return [1]
+
+        added = False
+        for i in range(len(nums)-1, -1, -1):
+            if nums[i] == 9:
+                nums[i] = 0
+                continue
+            else:
+                nums[i] += 1
+                added = True
+                break
+
+        if not added:
+            return [1] + nums
+        else:
+            return nums
+
+
+
+
+
+
+# ignore below one, follow above simpler one
+
 # copied from https://leetcode.com/problems/plus-one/solutions/24085/simple-python-solution-with-explanation-plus-one/comments/222704
 # time:O(n), space:O(1)
 class Solution:
