@@ -1,22 +1,13 @@
-# https://leetcode.com/problems/is-subsequence
-
-# space: O(1), time: O(t)
+# time:O(t), space:O(1)
 class Solution:
     def isSubsequence(self, s: str, t: str) -> bool:
-        if len(s) == 0:
-            return True
-        if len(s) > len(t):
-            return False
+        s_i, t_i = 0, 0
 
-        index_s = 0
-        for index_t in range(len(t)):
-            if t[index_t] == s[index_s]:
-                index_s += 1
-
-            if index_s == len(s):
-                return True
-        if index_s == len(s):
-                return True
-        else:
-            return False
+        while s_i < len(s) and t_i < len(t):
+            if s[s_i] == t[t_i]:
+                s_i += 1
+                t_i += 1
+            else:
+                t_i += 1
             
+        return s_i == len(s)
