@@ -2,14 +2,6 @@
 # time:O(n**2), space:O(1)
 class Solution:
     def minSubArrayLen(self, target: int, nums: List[int]) -> int:
-        """
-        args:
-            target
-            nums
-
-        returns:
-            len of mimimal length of subarray whose sum is greater than or equal to target
-        """
         n = len(nums)
         min_len = n
         flag = 0
@@ -31,22 +23,20 @@ class Solution:
 # time:O(n), space:O(1)
 class Solution:
     def minSubArrayLen(self, target: int, nums: List[int]) -> int:
+        result = float("inf")
         left = 0
-        curr_sum = 0
-        min_len = len(nums)+1
+        subarr_sum = 0
 
         for right in range(len(nums)):
-            curr_sum += nums[right]
-            while curr_sum >= target:
-                min_len = min(min_len, right-left+1)
-                curr_sum -= nums[left]
+            subarr_sum += nums[right]
+            while subarr_sum >= target:
+                result = min(result, right-left+1)
+            
+                # move window
+                subarr_sum -= nums[left]
                 left += 1
-        return min_len if min_len<=len(nums) else 0
 
-
-
-
-
+        return 0 if result == float("inf") else result
 
 
 
