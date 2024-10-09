@@ -3,18 +3,15 @@
 # time:O(n), space:O(1)
 class Solution:
     def minAddToMakeValid(self, s: str) -> int:
+        opening = 0
+        result = 0
 
-        result, bal = 0, 0
         for bracket in s:
             if bracket == "(":
-                bal += 1
+                opening += 1
             else:
-                bal -= 1
-                if bal < 0:
-                    result += 1
-                    bal = 0
-                
-            
-
-        return result + abs(bal)
-      
+                opening -= 1
+            if opening < 0:
+                result += 1
+                opening = 0
+        return result + abs(opening)
