@@ -35,3 +35,31 @@ class Solution:
             max_count = max(max_count, count)
 
         return max_count
+
+""
+***************************BETTER BY ME
+""
+class Solution:
+    def maxVowels(self, s: str, k: int) -> int:
+        left = 0
+        vowels = {'a', 'e', 'i', 'o','u'}
+        count = 0
+        max_count = -1
+
+        for right in range(len(s)):
+            if right-left+1 <= k:
+                if s[right] in vowels:
+                    count += 1
+            else:
+                if s[left] in vowels:
+                    count -= 1
+                left += 1
+
+                # add s[right] to window
+                if s[right] in vowels:
+                    count += 1
+            # update max_count
+            max_count = max(max_count, count)
+
+        return max_count
+
