@@ -1,43 +1,39 @@
-# https://leetcode.com/problems/meeting-rooms-ii/description/
-# https://www.lintcode.com/problem/919/description
-
-from typing import (
-    List,
-)
-from lintcode import (
-    Interval,
-)
-
-"""
-Definition of Interval:
-class Interval(object):
-    def __init__(self, start, end):
-        self.start = start
-        self.end = end
-"""
-
+import heapq
 class Solution:
-    """
-    @param intervals: an array of meeting time intervals
-    @return: the minimum number of conference rooms required
-    """
-    def min_meeting_rooms(self, intervals: List[Interval]) -> int:
-        # Write your code here
-        start = sorted([i.start for i in intervals])
-        end = sorted([i.end for i in intervals])
+    def minMeetingRooms(self, intervals: List[List[int]]) -> int:
+        intervals.sort()
+        minHeap = []
 
-        counter, max_counter = 0, 0
-        s, e = 0, 0
+        for interval in intervals:
+            if not minHeap:
+                heapq.heappush(minHeap, interval[1])
+                continue
+            if minHeap[0] <= interval[0]:
+                heapq.heappop(minHeap)
+            
+            heapq.heappush(minHeap, interval[1])
+            
+        return len(minHeap)
 
-        while s < len(start):
-            if start[s] < end[e]:
-                counter += 1
-                s += 1
-            else:
-                counter -= 1
-                e += 1
-            max_counter = max(max_counter , counter)
-
-        return max_counter
 
 # time:O(nlogn), space:O(n)
+class Solution:
+    def minMeetingRooms(self, intervals: List[List[int]]) -> int:
+        starts = sorted([i[0] for i in intervals])
+        ends = sorted([i[1] for i in intervals])
+
+        s, e = 0, 0
+        rooms = 0
+        max_rooms = 0
+
+        while s < len(starts):
+            if starts[s] < ends[e]:
+                rooms += 1
+                s += 1
+            else: # starts[s] >= ends[e]
+                rooms -= 1
+                e += 1
+            max_rooms = max(max_rooms, rooms)
+
+        return max_rooms
+                
