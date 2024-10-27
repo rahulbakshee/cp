@@ -15,16 +15,20 @@ class Solution:
 # time-O(n), space-O(n)
 class Solution:
     def climbStairs(self, n: int) -> int:
-        memo = {}
-        return self.helper(n, memo)
+        def helper(n, memo):
+            # base case
+            if n == 1:
+                return 1
+            if n == 2:
+                return 2
 
-    def helper(self, n:int, memo:dict[int, int])->int:
-        if n==1 or n==2:
-            return n
-        if n not in memo:
-            memo[n] = self.helper(n-1, memo) + self.helper(n-2, memo)
-        return memo[n]
+            if n in memo:
+                return memo[n]
+            
+            memo[n] = helper(n-1, memo) + helper(n-2, memo)
+            return memo[n]
 
+        return helper(n, dict())
 
 # bottom up/Tabulation
 # time-O(n), space-O(n)
