@@ -28,3 +28,46 @@ class Solution:
                 curr_b = 0
 
         return "".join(result)
+
+
+
+
+
+# using heap
+# time:O(a+b+c), space:O(1)
+
+import heapq
+class Solution:
+    def longestDiverseString(self, a: int, b: int, c: int) -> str:
+        maxHeap = []
+        if a>0:
+            heapq.heappush(maxHeap, [-1*a, "a"])
+        if b>0:
+            heapq.heappush(maxHeap, [-1*b, "b"])
+        if c>0:
+            heapq.heappush(maxHeap, [-1*c, "c"])
+
+        # input = [1,1,7]
+        #          a,b,c
+        # maxHeap = [-7,"a"], [-1,"b"], [-1,"c"]
+
+        result = []
+        while maxHeap:
+            count, char = heapq.heappop(maxHeap)
+            if len(result)>=2 and result[-1]== char and result[-2] == char:
+                if not maxHeap:
+                    break
+                tempCount, tempChar = heapq.heappop(maxHeap)
+                result.append(tempChar)
+                tempCount += 1
+                if tempCount < 0:
+                    heapq.heappush(maxHeap, [tempCount, tempChar])
+
+            else:
+                result.append(char)
+                count += 1
+                
+            if count<0:
+                heapq.heappush(maxHeap, [count, char])
+
+        return "".join(result)
