@@ -25,3 +25,38 @@ class Solution:
             else:
                 left = mid + 1
         return left
+
+
+
+# EASY TO UNDERSTAND
+class Solution:
+    def minDays(self, bloomDay: List[int], m: int, k: int) -> int:
+        if len(bloomDay) < m*k:
+            return -1
+
+
+        def feasible(days)->bool:
+            num_bouquets = 0
+            count = 0
+            for bloom in bloomDay:
+                if bloom <= mid:
+                    count += 1
+                else:
+                    count = 0
+
+                if count == k:
+                    num_bouquets += 1
+                    count = 0
+
+            return num_bouquets >= m
+            
+
+        left, right = 1, max(bloomDay)
+        while left < right:
+            mid = left + (right-left)//2
+            if feasible(mid):
+                right = mid
+            else:
+                left = mid+1
+
+        return left
