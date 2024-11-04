@@ -1,73 +1,141 @@
-# https://leetcode.com/problems/missing-number
-
-
-# space: O(1), time:O(n)
-class Solution:
-    def missingNumber(self, nums: List[int]) -> int:
-        n = len(nums)
-        return n*(n+1)//2 - sum(nums)
-
-
 # https://leetcode.com/problems/missing-number/solutions/2563887/eight-different-approaches-in-python3/?orderBy=most_votes
 
-
-
-
-# tim:O(n**2), space:O(1)
 class Solution:
-    def missingNumber(self, nums: List[int]) -> int:
-        n = len(nums)
-        for i in range(n):
+    def brute_force(self, nums: List[int]) -> int:
+        """
+        Time Complexity: O(N*N)
+        Space Complexity: O(1)
+        """
+        for i in range(len(nums)):
             if i not in nums:
                 return i
-        return n
-
-
-# time:O(n), space:O(n)
-class Solution:
-    def missingNumber(self, nums: List[int]) -> int:
-        n = len(nums)
+        return len(nums)
+    
+    def sorting(self, nums: List[int]) -> int:
+        """
+        Time Complexity: O(Nlog(N))
+        Space Complexity: O(N)
+        """
+        nums.sort()
+        
+        for i, num in enumerate(nums):
+            if i != num:
+                return i
+        return len(nums)
+    
+    def binary_search(self, nums: List[int]) -> int:
+        """
+        Time Complexity:
+            O(Nlog(N)) if nums not sorted
+            O(log(N)) if nums already sorted
+        
+        Space Complexity:
+            O(N) if nums not sorted
+            O(1) if nums sorted
+        """
+        nums.sort()
+        left, right = 0, len(nums)
+        mid = (left+right)//2
+        while left < right:
+            if nums[mid] == mid:
+                left = mid+1
+            else:
+                right = mid - 1
+            
+            mid = (left + right)//2
+        
+        return mid + 1
+    
+    def hashing(self, nums: List[int]) -> int:
+        """
+        Time Complexity: O(N)
+        Space Complexity: O(N)
+        """
         nums_set = set(nums)
-        for i in range(n):
+        N = len(nums)
+        for i in range(N):
             if i not in nums_set:
                 return i
-        return n
-
-
-# time:O(nlogn), space:O(n)
-class Solution:
-    def missingNumber(self, nums: List[int]) -> int:
-        n = len(nums)
-        nums.sort()
-        for i in range(n):
-            if nums[i] != i:
-                return i
-
-        return n
-
-
-# math way
-# time:O(n), space:O(1)
-class Solution:
-    def missingNumber(self, nums: List[int]) -> int:
-        n = len(nums)
-        return n*(n+1)//2 - sum(nums)
-
-# binary search
-class Solution:
-    def missingNumber(self, nums: List[int]) -> int:
-        n = len(nums)
-        nums.sort()
-        if nums[-1] == n-1:
-            return n
-
         
-        left, right = -1, n 
-        while left +1 != right:
-            mid = (left+right)//2
-            if nums[mid] == mid:
-                left = mid
+        return len(nums)
+        
+    def gauss_formula(self, nums: List[int]) -> int:
+        """
+        Time Complexity: O(N)
+        Space Complexity: O(1)
+        """
+        N = len(nums)
+        return N*(N + 1)//2 - sum(nums)
+    
+    def xor(self, nums: List[int]) -> int:
+        """
+        Time Complexity: O(N)
+        Space Complexity: O(1)
+        """
+        result = len(nums)
+        for i, v in enumerate(nums):
+            result ^= i^v
+        
+        return result
+    
+    def cyclic_swapping(self, nums: List[int]) -> int:
+        """
+        Time Complexity: O(N)
+        Space Complexity: O(1)
+        """
+        current = 0
+        N = len(nums)
+        count = 0
+        while current < N:
+            count+= 1
+            if nums[current] == N:
+                current += 1
+                continue
+            
+            if nums[current] == nums[nums[current]]:
+                current += 1
             else:
-                right = mid
-
-        return right
+                temp = nums[current]
+                nums[current] = nums[nums[current]]
+                nums[temp] = temp
+        
+        for i, v in enumerate(nums):
+            if i != v:
+                return i
+        
+        return N
+    
+    def value_inversion(self, nums: List[int]) -> int:
+        """
+        Time Complexity: O(N)
+        Space Complexity: O(1)
+        
+        Advantages:
+            - Original Input array can be restored
+        """
+        
+        for i, _ in enumerate(nums):
+            nums[i] += 1
+        
+        for i, v in enumerate(nums):
+            if abs(v) > len(nums):
+                continue
+        
+            nums[abs(v)-1] = -abs(nums[abs(v)-1])
+        
+        for i, v in enumerate(nums):
+            if v > 0:
+                return i
+        
+        return len(nums)
+                
+    
+    def missingNumber(self, nums: List[int]) -> int:
+        # return self.brute_force(nums)
+        # return self.sorting(nums)
+        # return self.hashing(nums)
+        # return self.gauss_formula(nums)
+        # return self.xor(nums)
+        # return self.cyclic_swapping(nums)
+        # return self.binary_search(nums)
+        return self.value_inversion(nums)
