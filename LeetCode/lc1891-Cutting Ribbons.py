@@ -1,4 +1,4 @@
-# time:O(log(max(n))), space:O(1)
+# time:O(nlog(max(ribbons))), space:O(1)
 class Solution:
     def maxLength(self, ribbons: List[int], k: int) -> int:
         left = 1
