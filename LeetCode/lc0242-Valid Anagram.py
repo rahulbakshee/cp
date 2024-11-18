@@ -1,5 +1,13 @@
 # https://leetcode.com/problems/valid-anagram/
 
+
+# SORTING - time:O(nlogn), space:O(n)
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        return sorted(t) == sorted(s)
+
+
+
 # space O(n), time O(n)
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
@@ -33,11 +41,6 @@ class Solution:
         else:
             return False
 
-
-# space O(1), time O(nlogn) whichever has more len
-class Solution:
-    def isAnagram(self, s: str, t: str) -> bool:
-        return sorted(t) == sorted(s)
 
 
 
