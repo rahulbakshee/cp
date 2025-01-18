@@ -25,7 +25,7 @@ class Solution:
             
         return dfs(root, float("-inf"))
 
-# using stack
+# DFS - using stack
 # time:O(n), space:O(n)
     def goodNodes(self, root: TreeNode) -> int:
         if not root:
@@ -43,5 +43,30 @@ class Solution:
                 stack.append([node.left, max_so_far])
             if node.right:
                 stack.append([node.right, max_so_far])
+
+        return result
+
+
+# BFS using Queue
+# time:O(n), space:O(n)
+class Solution:
+    def goodNodes(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+
+        result = 0
+        from collections import deque
+        q = deque([[root, root.val]])
+        while q:
+            node, max_so_far = q.popleft()
+            if node.val >= max_so_far:
+                result += 1
+
+            max_so_far = max(max_so_far, node.val)
+
+            if node.left:
+                q.append([node.left, max_so_far])
+            if node.right:
+                q.append([node.right, max_so_far])
 
         return result
