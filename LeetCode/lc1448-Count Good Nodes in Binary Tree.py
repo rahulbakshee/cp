@@ -1,10 +1,5 @@
-# time:O(n)
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
+# using DFS - recursion
+# time:O(n), space:O(n)
 class Solution:
     def goodNodes(self, root: TreeNode) -> int:
         # looks like DFS - stack
@@ -29,3 +24,24 @@ class Solution:
             return result
             
         return dfs(root, float("-inf"))
+
+# using stack
+# time:O(n), space:O(n)
+    def goodNodes(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+
+        stack = [[root, root.val]]
+        result = 0
+        while stack:
+            node, max_so_far = stack.pop()
+            if node.val>=max_so_far:
+                result += 1
+            max_so_far = max(max_so_far, node.val)
+
+            if node.left:
+                stack.append([node.left, max_so_far])
+            if node.right:
+                stack.append([node.right, max_so_far])
+
+        return result
