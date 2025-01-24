@@ -7,6 +7,8 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
+# DFS - recursive  - time:O(n), space:O(n)
 class Solution:
     def searchBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
         if not root:
@@ -41,3 +43,43 @@ class Solution:
                 return root
 
         return root
+
+# DFS - stack - time:O(n), space:O(n)
+class Solution:
+    def searchBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+        
+        if not root:
+            return 
+        stack = [root]
+        while stack:
+            node = stack.pop()
+            if node:
+                    
+                if node.val>val:
+                    stack.append(node.left)
+                elif node.val<val:
+                    stack.append(node.right)
+                else:
+                    return node
+
+        return None
+
+# BFS - queue, time:O(n), space:O(n)
+class Solution:
+    def searchBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+        if not root:
+            return 
+        from collections import deque
+        q = deque()
+        q.append(root)
+        while q:
+            node = q.popleft()
+            if node:
+                if node.val > val:
+                    q.append(node.left)
+                elif node.val < val:
+                    q.append(node.right)
+                else:
+                    return node
+
+        return
