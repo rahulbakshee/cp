@@ -1,17 +1,15 @@
-# https://leetcode.com/problems/keys-and-rooms/solutions/331847/5-python-solutions/?envType=study-plan-v2&envId=leetcode-75
-
 # DFS - recursive - time:O(n+e), space:O(n), n-rooms, e-keys
 class Solution:
     def canVisitAllRooms(self, rooms: List[List[int]]) -> bool:
-        def dfs(room_index):
-            if room_index not in keys:
-                keys.add(room_index)
-                for i in rooms[room_index]:
-                    dfs(i)
-        
-        keys = set()
+        def dfs(key):
+            if key not in visited:
+                visited.add(key)
+                for k in rooms[key]:
+                    dfs(k)
+                
+        visited = set()
         dfs(0)
-        return len(keys) == len(rooms)
+        return len(visited) == len(rooms)
 
 
 # DFS - iterative - stack
