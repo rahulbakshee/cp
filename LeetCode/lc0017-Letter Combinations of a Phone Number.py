@@ -27,3 +27,32 @@ class Solution:
 
         backtrack(0, "")
         return result
+
+
+
+
+# iterative
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+
+        if not digits:
+            return []
+
+        mapping = dict()
+        mapping["2"] = "abc"
+        mapping["3"] = "def"
+        mapping["4"] = "ghi"
+        mapping["5"] = "jkl"
+        mapping["6"] = "mno"
+        mapping["7"] = "pqrs"
+        mapping["8"] = "tuv"
+        mapping["9"] = "wxyz"
+        
+        res = [""]
+        for digit in digits:
+            tmp = []
+            for curStr in res:
+                for c in mapping[digit]:
+                    tmp.append(curStr + c)
+            res = tmp
+        return res
