@@ -1,4 +1,4 @@
-# time:O(n), space:O(n)
+# time:O(n), space:O(10) = O(1)
 class Solution:
     def findValidPair(self, s: str) -> str:
         hashmap = Counter(s)
