@@ -1,13 +1,17 @@
-# time:O(n), space:O(k)
+# time:O(n), space:O(k) - but tthe editorial says space:O(n)
 class Solution:
     def distinctNumbers(self, nums: List[int], k: int) -> List[int]:
         hashmap = defaultdict(int)
         result = []
-
+        
+        # fill the hashmap for the window of length K
+        # and add the len of hashmap to the result
         for i in range(k):
             hashmap[nums[i]] += 1
 
         result.append(len(hashmap))
+
+
 
         # move the window one element at a time
         for i in range(1, len(nums)-k+1):
