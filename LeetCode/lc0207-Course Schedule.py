@@ -1,3 +1,4 @@
+# topological sort
 # time:O(V+E), space:O(V+E)
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
@@ -30,8 +31,7 @@ class Solution:
             return True
 
         # create a graph
-        from collections import defaultdict
-        graph = defaultdict(list)
+        graph = {course:[] for course in range(numCourses)}
         for course, prereq in prerequisites:
             graph[course].append(prereq)
 
