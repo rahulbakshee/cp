@@ -1,3 +1,28 @@
+class Solution:
+    def decodeString(self, s: str) -> str:
+        curr_str = ""
+        curr_num = 0
+        stack = []
+
+        for i in range(len(s)):
+            if ord("0") <= ord(s[i]) <= ord("9"): # digits
+                curr_num = curr_num*10 + int(s[i])
+            elif s[i] == "[":
+                stack.append(curr_str)
+                stack.append(curr_num)
+                curr_str = ""
+                curr_num = 0
+            elif s[i] == "]":
+                num = stack.pop()
+                strs = stack.pop()
+                curr_str = strs + curr_str*num
+            else:
+                curr_str += s[i]
+
+        return curr_str
+
+
+
 # time:O(s), space:O(s)
 class Solution:
     def decodeString(self, s: str) -> str:
