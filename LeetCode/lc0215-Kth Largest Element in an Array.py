@@ -1,21 +1,21 @@
 
 
 # sorting
-# time:O(n logn ), space:O(sorting)
+# time:O(nlogn), space:O(n)
 class Solution:
     def findKthLargest(self, nums: List[int], k: int) -> int:
-        nums.sort()
-        return nums[-k]
+        nums = sorted(nums, reverse=True)
+        return nums[k-1]
 
 
-
-# time:O(k + (n-k) log k)
-# O(k) for heapifying the first k elements into heap
-# loop over (n-k) elements to push and pop from heap O(log k)
+# time:O(nlogk), space:O(k)
+import heapq
 class Solution:
     def findKthLargest(self, nums: List[int], k: int) -> int:
-        heap = nums[:k]
-        heapq.heapify(heap)
-        for n in nums[k:]:
-            heapq.heappushpop(heap, n)
-        return heap[0]
+        minHeap = []
+
+        for num in nums:
+            heapq.heappush(minHeap, num)
+            if len(minHeap) > k:
+                heapq.heappop(minHeap)
+        return heapq.heappop(minHeap)
