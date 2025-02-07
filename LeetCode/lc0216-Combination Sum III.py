@@ -1,3 +1,30 @@
+# better solution from chatgpt
+from typing import List
+
+class Solution:
+    def combinationSum3(self, k: int, n: int) -> List[List[int]]:
+        def backtrack(start, sol, curr_sum):
+            # If the combination is of the right length and sums to `n`, add to result
+            if len(sol) == k:
+                if curr_sum == n:
+                    result.append(sol.copy())
+                return
+            
+            # Try numbers from `start` to 9
+            for num in range(start, 10):
+                if curr_sum + num > n:  # Prune early if sum exceeds `n`
+                    break
+                sol.append(num)
+                backtrack(num + 1, sol, curr_sum + num)
+                sol.pop()  # Undo the choice
+
+        result = []
+        backtrack(1, [], 0)
+        return result
+
+
+
+
 class Solution:
     def combinationSum3(self, k: int, n: int) -> List[List[int]]:
         def backtrack(i, sol):
