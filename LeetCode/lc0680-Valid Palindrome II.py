@@ -1,15 +1,24 @@
+# https://www.youtube.com/watch?v=rOvidftIU_8&ab_channel=CrackingFAANG
 # time:O(n), space:O(1)
 class Solution:
     def validPalindrome(self, s: str) -> bool:
-        left = 0
-        right = len(s)-1
+        if len(s) <=2:
+            return True
+        
+        def isPalindrome(i,j):
+            while i<j:
+                if s[i] != s[j]:
+                    return False
+                i += 1
+                j -= 1
+            return True
 
+        left, right = 0, len(s)-1
         while left < right:
             if s[left] != s[right]:
-                    with_s_left = s[left:right]
-                    without_s_left = s[left+1: right+1]
-                    return with_s_left == with_s_left[::-1] or without_s_left == without_s_left[::-1]
-                    
+                return isPalindrome(left+1,right) or isPalindrome(left, right-1)
+
             left += 1
             right -=1
+
         return True
