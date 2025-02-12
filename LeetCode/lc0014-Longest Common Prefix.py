@@ -1,19 +1,36 @@
-# time: best case - O(k*n) - k is the len of common prefix, n is the len of strs
-# time - worst case :O(m*n) - m is len of each str in case of equal length strings, n-len of strs
-# space:O(1)
+# horizontal scanning
+# time:O(S) - O(S) , where S is the sum of all characters in all strings., space:O(1)
 class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
-        if not strs:
+        if not strs or len(strs) == 0:
             return ""
 
-        first_word = strs[0]
-        for i in range(len(first_word)):
-            for next_word in strs[1:]:
-                if i == len(next_word) or  next_word[i] != first_word[i]:
-                    return first_word[:i]
+        prefix = strs[0]
+        
+        for i in range(1, len(strs)):
+            while not strs[i].startswith(prefix):
+                prefix = prefix[:-1]
+                if prefix == "":
+                    return ""
 
-        return first_word
+        return prefix
 
+
+
+# vertical scanning
+# time:O(S) - O(S) , where S is the sum of all characters in all strings., space:O(1)
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        if not strs or len(strs) == 0:
+            return ""
+
+        for i in range(len(strs[0])):
+            c = strs[0][i]
+            for j in range(1, len(strs)):
+                if i == len(strs[j]) or c != strs[j][i]:
+                    return strs[0][:i]
+
+        return strs[0]
 
 # using trie
 #time:O(k*n)
