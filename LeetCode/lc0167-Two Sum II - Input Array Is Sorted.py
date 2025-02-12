@@ -29,14 +29,14 @@ class Solution:
 # two pointer solution
 # space O(1), time O(n)
 class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
-        left, right = 0, len(nums)-1
-
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        left, right = 0, len(numbers)-1
         while left < right:
-            if nums[left] + nums[right] > target:
+            if numbers[left] + numbers[right] > target:
                 right -= 1
-            elif nums[left] + nums[right] < target:
+            elif numbers[left] + numbers[right] < target:
                 left += 1
-            else: # nums[left] + nums[right] == target
+            else:
                 return [left+1, right+1]
-            
+                
+        return -1
