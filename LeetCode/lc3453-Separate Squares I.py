@@ -1,3 +1,5 @@
+# https://leetcode.com/problems/separate-squares-i/solutions/6426091/python-binary-search-with-precision-100-beat/
+
 class Solution:
     def separateSquares(self, squares: List[List[int]]) -> float:
         
