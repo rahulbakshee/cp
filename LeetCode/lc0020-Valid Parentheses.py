@@ -16,3 +16,24 @@ class Solution:
                 return False
         if stack == []: return True
         else: return False
+
+
+
+
+# i did by myself on Feb 17, 2025
+class Solution:
+    def isValid(self, s: str) -> bool:
+        mapping = dict()
+        mapping["]"] = "["
+        mapping[")"] = "("
+        mapping["}"] = "{"
+        
+        stack = []
+        for char in s:
+            if char  in "[({":
+                stack.append(char)
+            else: # ")}]"
+                if not stack or stack.pop() != mapping[char]:
+                    return False
+                
+        return True if not stack else False
