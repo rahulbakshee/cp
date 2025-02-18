@@ -1,11 +1,14 @@
-# recursive
-# time:O(n), space:O(n)
+
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
+
+# recursive
+# time:O(n), space:O(n)
 class Solution:
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         result = []
@@ -19,6 +22,8 @@ class Solution:
 
         helper(root)
         return result
+
+
 
 # iterative
 #time:O(n), space:O(n)
