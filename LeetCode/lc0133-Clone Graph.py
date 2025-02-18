@@ -1,4 +1,3 @@
-# DFS - time:O(n) n=Edges+vertices), space:O(v)
 """
 # Definition for a Node.
 class Node:
@@ -6,25 +5,53 @@ class Node:
         self.val = val
         self.neighbors = neighbors if neighbors is not None else []
 """
-
+# DFS recursion
+# time:O(V+E), space:O(V)
 from typing import Optional
 class Solution:
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
-        oldToNew = {}
-
         def dfs(node):
-            if not node:
-                return 
             if node in oldToNew:
                 return oldToNew[node]
 
+            # create node
             copy = Node(node.val)
             oldToNew[node] = copy
-            for nei in node.neighbors:
-                copy.neighbors.append(dfs(nei))
 
-            return copy
+            # create neighbors
+            for neighbor in node.neighbors:
+                copy.neighbors.append(dfs(neighbor))
 
+            return copy       
+        
+        
+        if not node:
+            return
+        oldToNew = {}
         return dfs(node)
 
-LOOK FOR OTEHR SOLUTIONS ON THE sOLUTIONS PAGE
+
+
+# time:O(V+E), space:O(v)
+# BFS - queue
+from collections import deque
+from typing import Optional
+class Solution:
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+        if not node:
+            return
+
+        oldToNew = {}
+        oldToNew[node] = Node(node.val)
+        q = deque([node])
+        
+        while q:
+            n = q.popleft()
+            for neighbor in n.neighbors:
+                if neighbor not in oldToNew:
+                    oldToNew[neighbor] = Node(neighbor.val)
+                    q.append(neighbor)
+
+                oldToNew[n].neighbors.append(oldToNew[neighbor])
+
+        return oldToNew[node]
