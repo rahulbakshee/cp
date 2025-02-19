@@ -56,4 +56,34 @@ class Solution:
                 stack.append((curr.left, ls+[curr.left.val]))
         return res
 
+
+# DFS + stack
+class Solution:
+    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
+        result = []
+        if not root:
+            return result
+
+        stack = [[root, root.val, [root.val]]]
+        while stack:
+            node, currSum, sol = stack.pop()
+            
+            # check if currSum = targetSum
+            if not node.left and not node.right:
+                if currSum == targetSum:
+                    result.append(sol.copy())
+
+
+
+            if node.left:
+                stack.append([node.left, currSum+node.left.val, sol+[node.left.val]])
+
+
+                
+            if node.right:
+                stack.append([node.right, currSum+node.right.val, sol+[node.right.val]])
+
+
+        return result
+
 # https://leetcode.com/problems/path-sum-ii/solutions/36829/python-solutions-recursively-bfs-queue-dfs-stack/
