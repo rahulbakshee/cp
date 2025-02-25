@@ -1,27 +1,45 @@
-# https://leetcode.com/problems/happy-number/description/
-
-# time:O(), space:O()
+# using hashset
+# time:O(logn), space:O(logn)
 class Solution:
     def isHappy(self, n: int) -> bool:
-        if n == 1:
-            return True
-        visit = set()
-
-        while n not in visit:
-            visit.add(n)
-
-            n = self.sum_of_sq_of_digits(n)
-
-            if n==1:
-                return True
-        return False
-    
-    def sum_of_sq_of_digits(self, n:int)->int:
-        output = 0
         
-        while n:
-            digit = n % 10
-            output += digit **2
-            n = n //10
-        return output
+        def happy(n):
+            result = 0
+            while n:
+                remainder = n%10
+                n = n//10
+                result += remainder **2
+
+            return result
             
+        seen = set()
+        while n != 1 and n != 4:
+            seen.add(n)
+            n = happy(n)
+        
+        return n==1
+
+
+########################
+# using Floyd cycle detection algo
+# time:(logn), space:O(1)
+class Solution:
+    def isHappy(self, n: int) -> bool:
+        
+        def happy(n):
+            result = 0
+            while n:
+                remainder = n%10
+                n = n//10
+                result += remainder **2
+
+            return result
+            
+
+        slow = n
+        fast = happy(n)
+        while fast != 1 and slow != fast:
+            slow = happy(slow)
+            fast = happy(happy(fast))
+        
+        return fast==1
