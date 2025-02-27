@@ -1,19 +1,35 @@
-# time:O(all chars in input words), space:O(order_to_num)
+# Time complexity:  O(n∗m), space:O(1), only 26 char in english
+# Where  n is the number of words and m is the average length of a word.
+# neetcode
+
 class Solution:
     def isAlienSorted(self, words: List[str], order: str) -> bool:
-        order_to_num = {}
-        for num, letter in enumerate(order):
-            order_to_num[letter] = num
+        # build the order dict {char:index}
+        order_dict = dict() # {"h":0, "l":1......"z":25}
+        for index, char in enumerate(order):
+            order_dict[char] = index
 
-        for i in range(len(words)-1):
-            word1 = words[i]
-            word2 = words[i+1]
-            for j in range(len(word1)):
-                if j == len(word2):
+        # words = ["abc", "def", "hij","jkl"]
+        # ["abc", "def"]
+        # ["def", "hij"]
+        # ["hij","jkl"]
+        
+        
+        for word1, word2 in zip(words, words[1:]):
+            for i in range(len(word1)):
+                # check for if i in range of word2
+                if i == len(word2):
                     return False
-                if word1[j] != word2[j]:
-                    if order_to_num[word1[j]] > order_to_num[word2[j]]:
+
+                # first occurence of divergence
+                if word1[i] != word2[i]:
+                    # check the order of the divergent char
+                    if order_dict[word1[i]] > order_dict[word2[i]]:
                         return False
-                    break
-        return True
                 
+                    break
+
+                else:
+                    continue
+
+        return True
