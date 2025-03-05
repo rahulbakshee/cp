@@ -4,6 +4,6 @@ All the pieces of codes follow Youtube video from freecodecamp.org by Alvin Zabl
 
 I have tried to give different ways of solving same problem mainly in following ways - 
 - Recursion
-- Recursion with memoization (top-down approach)
-- Tabulation (bottom-up approach) (iterative)
-- Space optimized bottom-up approach
+- DP-Recursion with memoization (top-down approach)
+- DP-Tabulation (bottom-up approach) (iterative)
+- DP-Space optimized bottom-up approach
