@@ -1,44 +1,72 @@
-# TLE - time:O(2**n), space:O(n)
+# recursion
+# time:O(2^n) breadth^depth, space:O(n)
 class Solution:
     def minCostClimbingStairs(self, cost: List[int]) -> int:
-        def recursion(n):
+        def dp(index):
             # base case
-            if n <2:
-                return cost[n]
+            if index >= len(cost):
+                return 0
             
-            return cost[n] + min(recursion(n-1), recursion(n-2))
+            return min(cost[index] + dp(index+1), cost[index] + dp(index+2))
+        
+        return min(dp(0),dp(1))
 
-        n = len(cost)
-        return min(recursion(n-1), recursion(n-2))
 
-# memo - top down - time:O(n), space:O(n)
+
+
+# recursion + memoization
+# time:O(n) , space:O(n)
 class Solution:
     def minCostClimbingStairs(self, cost: List[int]) -> int:
-        def memo(n):
+        def dp(index, memo):
             # base case
-            if n in cache:
-                return cache[n]
-            
-            cache[n] = cost[n] + min(memo(n-1), memo(n-2))
-            return cache[n]
-        
-        cache = {0:cost[0], 1:cost[1]}
-        n = len(cost)
-        return min(memo(n-1), memo(n-2))
-        
+            if index in memo:
+                return memo[index]
 
-# bottom up - tabulation - time:O()
+            if index >= len(cost):
+                return 0
+            
+            memo[index] = min(cost[index] + dp(index+1,memo), cost[index] + dp(index+2,memo))
+            return memo[index]
+        
+        return min(dp(0,{}),dp(1,{}))
+
+
+
+
+# bottom up DP- tabulation - iterative
+# time:O(n), space:O(n)
 class Solution:
     def minCostClimbingStairs(self, cost: List[int]) -> int:
+        # edge case - if len of input less than 2
+        if len(cost) < 2:
+            return cost[0]
+
+        # whne len of input is atleast 2 or more
         n = len(cost)
-        dp = [0] * (n)
-        dp[0] = cost[0]
-        dp[1] = cost[1]
+        dp = [0] * (n+1)
 
-        for i in range(2, n):
-            dp[i] = cost[i] + min(dp[i-2], dp[i-1])
+        for i in range(2, n+1):
+            dp[i] = min(dp[i-1]+cost[i-1], 
+                        dp[i-2]+cost[i-2])
 
-        return min(dp[n-1], dp[n-2])
-        
+        return dp[n]
 
+
+# bottom up DP- space optimized - iterative
+# time:O(n), space:O(1)
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        # edge case - if len of input less than 2
+        if len(cost) < 2:
+            return cost[0]
+
+        # whne len of input is atleast 2 or more
+        n = len(cost)
+        prev, curr = 0, 0
+
+        for i in range(2, n+1):
+            curr, prev = min(curr+cost[i-1], prev+cost[i-2]), curr
+
+        return curr
 
