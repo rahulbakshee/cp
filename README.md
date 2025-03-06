@@ -5,5 +5,5 @@
 - [ProjectEuler](https://github.com/rahulbakshee/cp/tree/master/HackerRank/ProjectEuler)
 - [System Design](https://github.com/rahulbakshee/cp/tree/master/System-Design)
 - [InterviewQuery](https://github.com/rahulbakshee/cp/tree/master/InterviewQuery)
-- [Dynamic Programming - Learn to Solve Algorithmic Problems & Coding Challenges](https://github.com/rahulbakshee/cp/tree/master/Dynamic%20Programming%20-%20Learn%20to%20Solve%20Algorithmic%20Problems%20%26%20Coding%20Challenges)
+- [Dynamic Programming - Learn to Solve Algorithmic Problems & Coding Challenges - Python](https://github.com/rahulbakshee/cp/tree/master/Dynamic%20Programming%20-%20Learn%20to%20Solve%20Algorithmic%20Problems%20%26%20Coding%20Challenges)
   - [YouTube](https://youtu.be/oBt53YbR9Kk)
