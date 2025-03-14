@@ -22,3 +22,22 @@ class Solution:
             curr_sum = max(num, curr_sum + num)
             max_sum = max(max_sum, curr_sum)
         return max_sum
+
+
+
+# kadane- easy to follow =
+# time:O(n), space:O(1)
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        currSum = 0
+        maxSum = float("-inf")
+
+        for num in nums:
+            if currSum < 0:
+                currSum = 0
+
+            currSum += num
+
+            maxSum = max(maxSum, currSum)
+
+        return maxSum
