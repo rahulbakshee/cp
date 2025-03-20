@@ -61,3 +61,28 @@ class Solution:
             return node
 
         return recurse(list1, list2)  
+
+
+
+
+# recursive - without creating extra outut LinkedList
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        def recurse(list1, list2):
+            # base cases
+            if not list1 and not list2:
+                return  
+            if not list1:
+                return list2
+            if not list2:
+                return list1
+
+            # compare element by element from the two lists
+            if list1.val < list2.val:
+                list1.next = recurse(list1.next, list2)
+                return list1
+            else:
+                list2.next = recurse(list1, list2.next)
+                return list2
+
+        return recurse(list1, list2)  
