@@ -1,47 +1,100 @@
-# DFS - recursive
-# time:O(n^2), space:O(n)
+# DFS - recursion
+# time:O(V+E), space:O(V+E)
 class Solution:
     def findCircleNum(self, isConnected: List[List[int]]) -> int:
-        
+        n = len(isConnected)
+        graph = defaultdict(list)
+        for i in range(n):
+            for j in range(n):
+                if isConnected[i][j]:
+                    graph[i+1].append(j+1)
+                    graph[j+1].append(i+1)
+
+
         def dfs(node):
-            visited[node] = True
-            for i in range(len(isConnected)):
-                if isConnected[node][i] and not visited[i]:
-                    dfs(i)
+            for nei in graph[node]:
+                if nei not in visited:
+                    visited.add(nei)
+                    dfs(nei)
 
 
-        result = 0
-        visited = [False] * len(isConnected)
-        for i in range(len(isConnected)):
-            if not visited[i]:
-                result += 1
-                dfs(i)
+        components = 0
+        visited = set()
+        for node in range(1, n+1):
+            if node not in visited:
+                visited.add(node)
+                dfs(node)
+                components += 1
 
-        return result
+        return components
 
 
-# BFS - queue 
-# time:O(n^2), space:O(n)
+
+# DFS - iterative - stack
+# time:O(V+E), space:O(V+E)
+class Solution:
+    def findCircleNum(self, isConnected: List[List[int]]) -> int:
+        n = len(isConnected)
+        # build the graph
+        graph = defaultdict(list)
+        for i in range(n):
+            for j in range(n):
+                if isConnected[i][j]:
+                    graph[i+1].append(j+1)
+                    graph[j+1].append(i+1)
+
+
+        # stack and append to stack
+        components = 0
+        visited = set()
+        for index in range(1, n+1):
+            if index not in visited:
+                visited.add(index)
+                stack = [index]
+
+                while stack:
+                    node = stack.pop()
+                    for nei in graph[node]:
+                        if nei not in visited:
+                            visited.add(nei)
+                            stack.append(nei)
+
+
+                components += 1
+
+        return components
+
+
+
+# BFS - iterative - queue
+# time:O(V+E), space:O(V+E)
 from collections import deque
 class Solution:
     def findCircleNum(self, isConnected: List[List[int]]) -> int:
-        def bfs(node):
-            visited[node] = True
+        n = len(isConnected)
 
-            q = deque([node])
-            while q:
-                node = q.popleft()
+        # build the graph
+        graph = defaultdict(list)
+        for i in range(n):
+            for j in range(n):
+                if isConnected[i][j]:
+                    graph[i+1].append(j+1)
+                    graph[j+1].append(i+1)
 
-                for i in range(len(isConnected)):
-                    if isConnected[node][i] == 1 and not visited[i]:
-                        q.append(i)
-                        visited[i] = True
-        
-        visited = [False] * len(isConnected)
-        result = 0
-        for i in range(len(isConnected)):
-            if not visited[i]:
-                result += 1
-                bfs(i)
+        # BFS - append to queue
+        visited = set()
+        components = 0
+        for index in range(1, n+1):
+            if index not in visited:
+                visited.add(index)
+                q = deque([index])
 
-        return result
+                while q:
+                    node = q.popleft()
+                    for nei in graph[node]:
+                        if nei not in visited:
+                            visited.add(nei)
+                            q.append(nei)
+                components += 1
+
+        return components
