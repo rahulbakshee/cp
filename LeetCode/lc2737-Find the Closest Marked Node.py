@@ -4,43 +4,42 @@
 # Space complexity: O(n+m)
 
 
-
+import heapq
 class Solution:
     def minimumDistance(self, n: int, edges: List[List[int]], s: int, marked: List[int]) -> int:
-        markedSet = set(marked)
-
-        # build adjacenecy list
+        
+        # build the graph/adjacency list from edges
         graph = defaultdict(list)
         for u,v,w in edges:
-            graph[u].append((v, w))
-            
-        
-        # init the distances
-        dist = [float("inf") for _ in range(n)]
-        dist[s] = 0
+            graph[u].append((v,w))
 
-        minHeap = [(0,s)]
 
-        # dijkstra algo
+        # buidl the set of marked nodes
+        markedSet = set(marked)
+
+        # init dict for storing the shortest distcnces
+        distance = {i:float("inf") for i in range(n)}
+        distance[s] = 0
+
+        # init heap with distance and node
+        minHeap = [[0,s]]
+
+        # dijkstra's algo
         while minHeap:
-            distance, node = heapq.heappop(minHeap)
-            # if found marked node
+            dist, node = heapq.heappop(minHeap)
+            
+            # reached destination
             if node in markedSet:
-                return distance
+                return distance[node]
 
+            # explore its neighbors
+            for nei, dw in graph[node]:
+                new_dist = dist + dw
 
-            # explore neighbors
-            for nei, weight in graph[node]:
-                new_distance = distance+weight
-
-                if new_distance < dist[nei]:
-                    dist[nei] = new_distance
-                    heapq.heappush(minHeap, (new_distance, nei))
-
+                if new_dist < distance[nei]:
+                    distance[nei] = new_dist
+                    # push into the heap
+                    heapq.heappush(minHeap, (new_dist, nei))
+           
 
         return -1
-
-
-
-
-
