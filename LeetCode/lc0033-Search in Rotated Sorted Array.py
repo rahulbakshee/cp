@@ -1,35 +1,37 @@
-# https://leetcode.com/problems/search-in-rotated-sorted-array/description/
-
-# linear
-# time:O(n), space:O(1)
+# brute force  - linear scan 
+# time:O(N), space:O(1)
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
-        for i in range(len(nums)):
-            if nums[i] == target:
+        for i, num in enumerate(nums):
+            if num == target:
                 return i
+
         return -1
 
 
-# binary search
-# time:O(logn), space:O(1)
+
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
-        left, right= 0, len(nums)-1
-
+        left, right = 0, len(nums)-1
         while left <= right:
-            mid= left + (right-left)//2
+            mid = (left+right)//2
 
             if nums[mid] == target:
                 return mid
-            # check if left half is sorted
+
             if nums[left] <= nums[mid]:
-                if nums[left] <= target < nums[mid]:
-                    right = mid 
+                if target < nums[left] or target > nums[mid]:
+                    left = mid + 1
+
+                else:
+                    right = mid - 1
+
+            else: # [6,7,0,1,2,3,4,5]
+            #        l      m      r
+                if target < nums[mid] or target > nums[right]:
+                    right = mid - 1
                 else:
                     left = mid + 1
-            else: # second half is sorted
-                if nums[mid] < target <= nums[right]:
-                    left = mid + 1
-                else:
-                    right = mid
+                    
+        
         return -1
