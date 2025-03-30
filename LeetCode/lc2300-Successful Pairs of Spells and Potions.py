@@ -37,3 +37,29 @@ class Solution:
             result[i] = len(potions)-index
 
         return result
+
+
+
+
+class Solution:
+    def successfulPairs(self, spells: List[int], potions: List[int], success: int) -> List[int]:   
+        def binary(spell):
+            left, right = 0, len(potions)-1
+            
+            while left <= right:
+                mid = (left+right)//2
+                if potions[mid] * spell >= success:
+                    right = mid - 1
+                else: # mid < success:
+                    left = mid +1
+
+            return left
+        
+        pair = [None for _ in range(len(spells))]
+
+        potions.sort()
+
+        for i, spell in enumerate(spells):
+            pair[i] = len(potions) - binary(spell)
+
+        return pair
