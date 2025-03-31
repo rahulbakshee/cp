@@ -31,7 +31,9 @@ class Solution:
             return value
         return -1
 
-
+        # shorter way for result
+        # result = max(all_times.values())
+        # return -1 if result == float("inf") else result
 
 
 # DFS
