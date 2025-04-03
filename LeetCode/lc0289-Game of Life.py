@@ -36,7 +36,7 @@ class Solution:
 
 
 
-# time:O(mn), space:O(mn)
+# time:O(mn), space:O(1)
 class Solution:
     def gameOfLife(self, board: List[List[int]]) -> None:
         """
