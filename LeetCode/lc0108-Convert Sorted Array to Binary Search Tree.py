@@ -25,3 +25,25 @@ class Solution:
             return
         
         return helper(0, len(nums)-1)
+
+
+
+
+# NOT EFFICIENT because I am passing entire array to function, but still runs
+class Solution:
+    def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
+
+        def dfs(nodes):
+            if not nodes:
+                return
+            
+            n = len(nodes)
+
+            root = TreeNode(nodes[n//2])
+            root.left = dfs(nodes[:n//2])
+            root.right = dfs(nodes[n//2+1:])
+
+            return root
+
+        return dfs(nums)
+
