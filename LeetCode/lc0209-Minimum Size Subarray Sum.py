@@ -18,6 +18,48 @@ class Solution:
 
         return min_len if flag else 0
 
+# two pointer
+class Solution:
+    def minSubArrayLen(self, target: int, nums: List[int]) -> int:
+        n = len(nums)
+        min_len = n+1
+        curr_sum = 0
+
+        left, right = 0,0
+        while right < n:
+            curr_sum += nums[right]
+
+            # if curr_sum exceeds the target, reduce 
+            # the window size by incremnting left
+            while curr_sum >= target:
+                min_len = min(min_len, right-left+1)
+                curr_sum -= nums[left]
+                left += 1
+                
+            right += 1
+
+        return min_len if min_len!=n+1 else 0
+        
+
+
+"""
+target = 7
+nums = [2,3,1,2,4,3]
+
+left index = 0, 1, 2
+right index = 0, 1, 2, 3, 4
+
+curr_sum = 7
+
+min_len = 4
+
+
+
+"""
+
+
+
+
 
 # two pointers
 # time:O(n), space:O(1)
