@@ -23,7 +23,31 @@ class Solution:
         helper(root)
         return result
 
+# same as above
+class Solution:
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        def dfs(node):
+            result = []
 
+            # 1- left subtree
+            if node.left:
+                left_subtree = dfs(node.left)
+                result.extend(left_subtree)
+
+            # 2- root node's val
+            result.append(node.val)
+
+            # 3- right subtree
+            if node.right:
+                right_subtree = dfs(node.right)
+                result.extend(right_subtree)
+
+            return result
+
+        if not root:
+            return []
+
+        return dfs(root)
 
 # iterative
 #time:O(n), space:O(n)
