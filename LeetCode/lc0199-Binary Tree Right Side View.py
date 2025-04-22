@@ -1,28 +1,34 @@
-# BFS - using QUEUE - time:O(n), space:O(n)
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+from collections import deque
 class Solution:
     def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
-        result = []
         if not root:
-            return result
+            return []
 
-        # looks like we need to do level-order traversal
-        from collections import deque
+        result = []
         q = deque([root])
+        level = 0
 
         while q:
-            rightSide = None
-            qlen = len(q)
-            for i in range(qlen):
-                node = q.popleft()
-                if node:
-                    rightSide = node
-                    q.append(node.left)
-                    q.append(node.right)
+            for _ in range(len(q)):
                     
-            if rightSide:
-                result.append(rightSide.val)
-        return result
+                node = q.popleft()
+            
+                if level == len(result):
+                    result.append(node.val)
+                    
+                if node.right:
+                    q.append(node.right)
+                if node.left:
+                    q.append(node.left)
+            level += 1
 
+        return result
 
 # DFS - recursive - time:O(n), space:O(n)
 class Solution:
