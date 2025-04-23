@@ -46,3 +46,34 @@ class Solution:
 
         dfs(root, 0)
         return result
+
+
+
+# DFS - stack
+class Solution:
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        if not root:
+            return []
+
+        result = []
+        stack = [[root, 0]] # node, level
+        while stack:
+            node, level = stack.pop()
+
+            if level == len(result):
+                result.append(node.val)
+            
+            # left first and then right child
+
+            if node.left:
+                stack.append([node.left, level+1])
+
+            if node.right:
+                stack.append([node.right, level+1])
+
+        return result
+
+
+
+
+
