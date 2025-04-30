@@ -4,6 +4,8 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
+# time:O(n), space:O(h) - n - number of node, h-height of tree
 class Solution:
     def sumNumbers(self, root: Optional[TreeNode]) -> int:
         def dfs(node, curr_num):
