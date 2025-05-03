@@ -18,26 +18,27 @@ class Solution:
 
 
 # time:O(n), space:O(n)
+# two pass
 class Solution:
     def maximumSwap(self, num: int) -> int:
-        num_str = list(str(num))
-        n = len(num_str)
+        nums = list(str(num))
+        n = len(nums)
+        
+        # find the max right index from right to left
         max_right_index = [0] * n
+        max_right_index[n-1] = n-1
+        
+        for i in range(n-2, -1, -1):
+            if nums[i] > nums[max_right_index[i+1]]:
+                max_right_index[i] = i
+            else:
+                max_right_index[i] = max_right_index[i+1]
 
-        max_right_index[n - 1] = n - 1
-        for i in range(n - 2, -1, -1):
-            max_right_index[i] = (
-                i
-                if num_str[i] > num_str[max_right_index[i + 1]]
-                else max_right_index[i + 1]
-            )
 
+        # check for first opportuinity to swap
         for i in range(n):
-            if num_str[i] < num_str[max_right_index[i]]:
-                num_str[i], num_str[max_right_index[i]] = (
-                    num_str[max_right_index[i]],
-                    num_str[i],
-                )
-                return int("".join(num_str))
+            if nums[i] < nums[max_right_index[i]]:
+                nums[i], nums[max_right_index[i]] = nums[max_right_index[i]], nums[i]
+                return int("".join(nums))
 
         return num
