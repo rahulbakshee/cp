@@ -100,6 +100,47 @@ print(solution.shortestPathBinaryMatrix(grid))
 ######################################################################
 
 
-# return any one of the paths - DFS
+# BELOW DFS CODE DOES NOT WORK FOR shortest path algo - 
+class Solution:
+    def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
+        def dfs(r,c):
+            if r<0 or r>=rows or c<0 or c>=cols:
+                return float("inf")
+
+            if grid[r][c]:
+                return float("inf")
+            
+            if (r,c) in visited:
+                return float("inf")
+
+            if (r,c) == (rows-1,cols-1):
+                return 1
+
+            visited.add((r,c))
+
+            distance = float("inf")
+
+            # explore children
+            for dr,dc in directions:
+                new_r = r+dr
+                new_c = c+dc
+                distance = min(distance, 1+dfs(new_r,new_c))
+
+            return distance       
+
+        rows = len(grid)
+        cols = len(grid[0])
+        
+        if not grid or rows == 0:
+            return -1
+        
+        if grid[0][0] == 1 or grid[rows-1][cols-1] == 1:
+            return -1
+
+        directions = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
+        visited = set()
+
+        result = dfs(0,0)
+        return result if result != float("inf") else -1
 
 
