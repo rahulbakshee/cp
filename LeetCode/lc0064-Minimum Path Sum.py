@@ -73,8 +73,8 @@ class Solution:
 
 
         return dp[0][0]
-
-
+##############################################################################################
+###### this is the tabulation you have to used
 class Solution:
     def minPathSum(self, grid: List[List[int]]) -> int:
         rows = len(grid)
@@ -90,7 +90,8 @@ class Solution:
 
         return dp[0][0]
 
-
+###########
+######################################################################################################
 
 # tabulation - bottom up 1D DP
 # time:O(mn), space:O(n)
