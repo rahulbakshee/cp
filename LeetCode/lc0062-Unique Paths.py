@@ -1,20 +1,37 @@
 # recursion - TLE - time:O(2^(m+n)), space:O(m+n)
+# class Solution:
+#     def uniquePaths(self, m: int, n: int) -> int:
+#         # base cases
+#         # if out of boundry - 
+#         # 0Xm or nX0 - only 0 ways 
+#         if m == 0 or n == 0:
+#             return 0
+        
+#         # 1X1 grid - only one way
+#         if m == n == 1:
+#             return 1
+        
+#         # traverse next coordinate
+#         return self.uniquePaths(m-1, n) + self.uniquePaths(m, n-1)   
+
+
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
-        # base cases
-        # if out of boundry - 
-        # 0Xm or nX0 - only 0 ways 
-        if m == 0 or n == 0:
-            return 0
-        
-        # 1X1 grid - only one way
-        if m == n == 1:
-            return 1
-        
-        # traverse next coordinate
-        return self.uniquePaths(m-1, n) + self.uniquePaths(m, n-1)   
+        def dp(r,c):
+            if (r,c) in memo:
+                return memo[(r,c)]
+            # base case
+            if r==m-1 and c==n-1:
+                return 1
 
+            if r==m or c==n:
+                return 0
 
+            memo[(r,c)] = dp(r+1,c) + dp(r,c+1)
+            return memo[(r,c)]
+
+        memo = {}
+        return dp(0,0)
 
 
 # recursion with memoization - top down DP
