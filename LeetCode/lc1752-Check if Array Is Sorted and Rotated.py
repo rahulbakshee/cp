@@ -1,3 +1,27 @@
+# better neetcode solution
+
+class Solution:
+    def check(self, nums: List[int]) -> bool:
+        n = len(nums)
+        count = 1
+
+        if n == 1:
+            return True
+
+        for i in range(1, n*2):
+            if nums[(i-1)%n] <= nums[i%n]:
+                count += 1
+            else:
+                count = 1
+
+            if count == n:
+                return True
+
+
+        return False
+
+######################################### use above
+
 # time:O(n), space:O(1)
 class Solution:
     def check(self, nums: List[int]) -> bool:
