@@ -1,70 +1,95 @@
-# time:O(mn), space:O(m+n)
+# bruteforce
+# make a copy of original matrix and set cells to zeros
+# time:O(mn), space:O(mn)
 class Solution:
     def setZeroes(self, matrix: List[List[int]]) -> None:
         """
         Do not return anything, modify matrix in-place instead.
         """
-        if not matrix:
-            return []
+        rows = len(matrix)
+        cols = len(matrix[0])
+        matrix_copy = [[matrix[i][j] for j in range(cols)] for i in range(rows)]
+        
+
+        # check for zeros
+        for row in range(rows):
+            for col in range(cols):
+                if matrix[row][col] == 0:
+                    for r in range(rows):
+                        matrix_copy[r][col] = 0
+
+                    for c in range(cols):
+                        matrix_copy[row][c] = 0
+
+        # copy back the values of matrix_copy to original matrix
+        for i in range(rows):
+            for j in range(cols):
+                matrix[i][j] = matrix_copy[i][j]
+
+
+# using hashsets for storing indexes with zero values
+# time:O(mn), spoace:O(m+n)
+class Solution:
+    def setZeroes(self, matrix: List[List[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        row_set = set()
+        col_set = set()
 
         rows = len(matrix)
         cols = len(matrix[0])
 
-        row_zeros = set()
-        col_zeros = set()
-        for i in range(rows):
-            for j in range(cols):
-                if matrix[i][j] == 0:
-                    row_zeros.add(i)
-                    col_zeros.add(j)
+        for r in range(rows):
+            for c in range(cols):
+                if matrix[r][c] == 0:
+                    # add the indexes to respective sets
+                    row_set.add(r)
+                    col_set.add(c)
 
-        for i in range(rows):
-            for j in range(cols):
-                if i in row_zeros or j in col_zeros:
-                    matrix[i][j] = 0
-
-        
+        # iterate over the matrix once again to mark the cells as zero if indexes in either of sets
+        for r in range(rows):
+            for c in range(cols):
+                if r in row_set or c in col_set:
+                    matrix[r][c] = 0
 
 
-
+# OPTIMAL - constant space 
+# time:O(mn), space:O(1)
 class Solution:
     def setZeroes(self, matrix: List[List[int]]) -> None:
         """
         Do not return anything, modify matrix in-place instead.
         """
+        first_row_zero = False
+        rows = len(matrix)
+        cols = len(matrix[0])
 
-        m = len(matrix)
-        n = len(matrix[0])
+        # determine which rows/cols need to be zero
+        for r in range(rows):
+            for c in range(cols):
+                if matrix[r][c] == 0:
+                    # mark the first row as zero
+                    matrix[0][c] = 0
+                    # for marking col as zero
+                    if r>0:
+                        matrix[r][0] = 0
+                    else:
+                        first_row_zero = True
 
-        frz = False
-        fcz = False
 
-        for i in range(m):
-            if matrix[i][0] == 0:
-                fcz = True
-                break
-        
-        for i in range(n):
-            if matrix[0][i] == 0:
-                frz = True
-                break
+        # iterate over matrix once again to mark the cells zeros
+        for r in range(1, rows):
+            for c in range(1, cols):
+                if matrix[0][c] == 0 or matrix[r][0] == 0:
+                    matrix[r][c] = 0
 
-        for i in range(1, m):
-            for j in range(1, n):
-                if matrix[i][j] == 0:
-                    matrix[i][0] = 0
-                    matrix[0][j] = 0
+        # first col
+        if matrix[0][0] == 0:
+            for r in range(rows):
+                matrix[r][0] = 0
 
-        for i in range(1, m):
-            for j in range(1, n):
-                if matrix[i][0] == 0 or matrix[0][j] == 0:        
-                    matrix[i][j] = 0
-
-        if frz:
-            for i in range(n):
-                matrix[0][i] = 0
-
-                            
-        if fcz:
-            for i in range(m):
-                matrix[i][0] = 0
+        # first row 
+        if first_row_zero:
+            for c in range(cols):
+                matrix[0][c] = 0
