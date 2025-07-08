@@ -1,37 +1,35 @@
-https://leetcode.com/problems/meeting-rooms/
-# https://www.lintcode.com/problem/920/
-
-
-from typing import (
-    List,
-)
-from lintcode import (
-    Interval,
-)
-
-"""
-Definition of Interval:
-class Interval(object):
-    def __init__(self, start, end):
-        self.start = start
-        self.end = end
-"""
-
+# bruteforce
+# time:O(n^2), space:O(1)
 class Solution:
-    """
-    @param intervals: an array of meeting time intervals
-    @return: if a person could attend all meetings
-    """
-    def can_attend_meetings(self, intervals: List[Interval]) -> bool:
-        # Write your code here
-        intervals.sort(key=lambda i: i.start)
+    def canAttendMeetings(self, intervals: List[List[int]]) -> bool:
+        for i in range(len(intervals)):
+            for j in range(i+1, len(intervals)):
+                if (
+                    (intervals[i][0] <= intervals[j][0] and intervals[i][1] > intervals[j][0]) or
+                    (intervals[j][0] <= intervals[i][0] and intervals[j][1] > intervals[i][0])
+                   ):
+                    return False
 
-        for i in range(1, len(intervals)):
-            before = intervals[i-1]
-            after = intervals[i]
-
-            if before > after.start:
-                return False
         return True
 
-# time:O(nlogn), space:O(1)
+
+# sorting
+# time:O(nlogn), space:O(sorting/n)
+class Solution:
+    def canAttendMeetings(self, intervals: List[List[int]]) -> bool:
+        # sort the input intervals
+        intervals.sort()
+
+        # loop over intervals and check if overlapping
+        if len(intervals) < 2:
+            return True
+
+        for i in range(len(intervals)-1):
+            first = intervals[i]
+            second = intervals[i+1]
+
+            # check if second is starting before first ends
+            if second[0] < first[1]:
+                return False
+
+        return True
