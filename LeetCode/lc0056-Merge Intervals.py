@@ -1,17 +1,17 @@
-# https://leetcode.com/problems/merge-intervals/description/
-
-# time:O(nlogn), space:O(1)
+# time:O(nlogn), space:O(sorting/n)
 class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
-        # sort the input
-        intervals.sort(key= lambda i:i[0])
+        # sort the input intervals based on start time
+        intervals.sort()
 
-        # initialize the result output
-        result = [intervals[0]]
+        merged = []
+        for i in range(len(intervals)):
+            # if the list of merged intervals is empty or if curr 
+            # interval does not overlap with the previous, simply append it
+            if not merged or merged[-1][1] < intervals[i][0]:
+                merged.append(intervals[i])
+            else:
+                # merge the overlapping intervals
+                merged[-1][1] = max(merged[-1][1], intervals[i][1])
 
-        for interval in intervals[1:]:
-            if interval[0] <= result[-1][1]: # overlap
-                result[-1][1] = max(result[-1][1], interval[1])
-            else: #no overlap
-                result.append(interval)
-        return result
+        return merged
