@@ -17,7 +17,7 @@ class Solution:
         counter = {}
         for num in hand:
             counter[num] = 1+counter.get(num, 0)
-
+ 
         # init a minHeap to store counter keys in increasing fashion
         minHeap = list(counter.keys())
         heapq.heapify(minHeap)
