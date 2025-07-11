@@ -1,69 +1,172 @@
-# recursive dfs from netcode
-# time:O(m*n), space:O(m*n) - visited set and call stack
+# simple counting - time:O(mn), space:O(1)
 class Solution:
     def islandPerimeter(self, grid: List[List[int]]) -> int:
+        rows = len(grid)
+        cols = len(grid[0])
+
+        result = 0
+
+        for r in range(rows):
+            for c in range(cols):
+                # land
+                if grid[r][c]:
+                    result += 4
+
+                    if r > 0 and grid[r-1][c] == 1: # check top
+                        result -= 2
+
+                    if c > 0 and grid[r][c-1] == 1: # check left
+                        result -= 2
+
+        return result        
+
+
+# DFS - time:O(nm), space:O(nm)
+class Solution:
+    def islandPerimeter(self, grid: List[List[int]]) -> int:
+        rows = len(grid)
+        cols = len(grid[0])
+
         visited = set()
 
-        def dfs(i, j):
-            # base cases
-            # if already visited
-            if (i,j) in visited:
+        directions = [(1,0), (0,1), (-1,0), (0,-1)]
+
+        # define DFS function to go over the island from a starting point
+        def dfs(r,c):
+            # boundary check
+            if r<0 or c<0 or r>=rows or c>=cols:
+                return 1
+            
+            # check if water
+            if grid[r][c] == 0:
+                return 1    
+            
+            # check if cell already visited
+            if (r,c) in visited:
                 return 0
 
-            # lower out of bounds
-            if i < 0 or j < 0:
-                return 1
-            
-            # upper out of bounds
-            if i>=len(grid) or j>=len(grid[0]):
-                return 1
+            # add it to visted set
+            visited.add((r,c))
 
-            # if water
-            if grid[i][j] == 0:
-                return 1
+            peremeter = 0
 
-            # recurse
-            visited.add((i, j))
+            # explore its neighbors
+            for dr, dc in directions:
+                new_r = r + dr
+                new_c = c+ dc
 
-            perimeter = dfs(i, j-1) # left
-            perimeter += dfs(i, j+1) # right
-            perimeter += dfs(i-1, j) # up
-            perimeter += dfs(i+1, j) # down
-            
-            #         (-1,0)
-            # (0,-1) (0,0) (0,1)
-            #         (1,0)
+                peremeter += dfs(new_r, new_c)
 
-            return perimeter
+            return peremeter
 
-        for i in range(len(grid)):
-            for j in range(len(grid[0])):
+        for i in range(rows):
+            for j in range(cols):
                 if grid[i][j]:
                     return dfs(i,j)
 
 
-
-
-# iterative solution from solutions tab
-# on the idea of adding 4(for the boundaries of the cell)
-# and then removing 2 if that is a shared boundary
-# time:O(n*m), space:O(1)
+# DFS - iterative stack - time:O(mn), space:O(mn)
 class Solution:
     def islandPerimeter(self, grid: List[List[int]]) -> int:
-        perimeter = 0
+        rows = len(grid)
+        cols = len(grid[0])
 
-        for row in range(len(grid)):
-            for col in range(len(grid[0])):
-                # if we are on land
-                if grid[row][col] == 1:
-                    perimeter += 4
+        visited = set()
 
-                    # check the cell to the left
-                    if col>0 and grid[row][col-1] == 1:
-                        perimeter -= 2
-                    # check the cell to the up
-                    if row>0 and grid[row-1][col] == 1:
-                        perimeter -= 2
+        directions = [(1,0), (0,1), (-1,0), (0,-1)]
 
-                    
-        return perimeter
+        # define DFS function to go over the island from a starting point
+        def dfs(i,j):
+            nonlocal peremeter
+
+            stack = [(i,j)]
+            while stack:
+                r,c = stack.pop()
+
+                # boundary check
+                if r<0 or c<0 or r>=rows or c>=cols:
+                    peremeter += 1
+                    continue
+                
+                # check if water
+                if grid[r][c] == 0:
+                    peremeter += 1    
+                    continue
+                
+                # check if cell already visited
+                if (r,c) in visited:
+                    peremeter += 0
+                    continue
+
+                # add it to visted set
+                visited.add((r,c))
+
+                # explore its neighbors
+                for dr, dc in directions:
+                    new_r = r + dr
+                    new_c = c+ dc
+
+                    stack.append((new_r, new_c))
+
+        
+        peremeter = 0
+        for i in range(rows):
+            for j in range(cols):
+                if grid[i][j]:
+                    dfs(i,j)
+
+        return peremeter
+
+
+
+# BFS - iterative queue - time:O(mn), space:O(mn)
+class Solution:
+    def islandPerimeter(self, grid: List[List[int]]) -> int:
+        rows = len(grid)
+        cols = len(grid[0])
+
+        visited = set()
+
+        directions = [(1,0), (0,1), (-1,0), (0,-1)]
+
+        # define DFS function to go over the island from a starting point
+        def bfs(i,j):
+            nonlocal peremeter
+
+            q = deque([(i,j)])
+            while q:
+                r,c = q.popleft()
+
+                # boundary check
+                if r<0 or c<0 or r>=rows or c>=cols:
+                    peremeter += 1
+                    continue
+                
+                # check if water
+                if grid[r][c] == 0:
+                    peremeter += 1    
+                    continue
+                
+                # check if cell already visited
+                if (r,c) in visited:
+                    peremeter += 0
+                    continue
+
+                # add it to visted set
+                visited.add((r,c))
+
+                # explore its neighbors
+                for dr, dc in directions:
+                    new_r = r + dr
+                    new_c = c+ dc
+
+                    q.append((new_r, new_c))
+
+        
+        peremeter = 0
+        for i in range(rows):
+            for j in range(cols):
+                if grid[i][j]:
+                    bfs(i,j)
+
+        return peremeter
