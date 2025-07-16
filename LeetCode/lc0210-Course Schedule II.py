@@ -1,56 +1,87 @@
-# cracking fang
-# time:O(E+V), space:O(V)
+# DFS - topological sort
+# time:O(V + E), space:O(V + E)
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
         if not prerequisites:
-            return [i for i in range(numCourses)]
+            return [course for course in range(numCourses)]
 
-        # step - 1 build the graph
-        # graph = {course1: [req1, req2,,,,,]}
-
+        # 1 - build the graph
+        # graph = {course1:[pre1, pre3], course2:[], course3:[pre6].....}
         graph = {course:[] for course in range(numCourses)}
-        for course, req in prerequisites:
-            graph[course].append(req)
+        for u,v in prerequisites:
+            graph[u].append(v)
 
-        # step 2- create sets which we could use for identifying 
-        # white(unexplored), gray(currently being explored), black(fully explored)
+        # 2 - initialize dict for storing the nodes
+        gray = set()                # currently processing courses
+        white = set(graph.keys())   # to be completed courses
+        black = set()               # completed courses
 
-        white = set(graph.keys())
-        gray = set()
-        black = set()
-        order = []
-
-        # step 4- define DFS
-        def dfs(course, gray, black, order):
+        # 3- start with white set(untouched/to be completed courses) and then explore its preReqs
+        # by passing them to DFS, and then marking them completed
+        def dfs(course):
             gray.add(course)
 
-            for prereq in graph[course]:
-                if prereq in black:
+            # start exploring its neighbors/preReq
+            for nei in graph[course]:
+                if nei in gray: # currently preocessing
+                    return False
+
+                if nei in black: # already completed
                     continue
-                
-                if prereq in gray:
+
+                if not dfs(nei):
                     return False
-                    
-                if not dfs(prereq, gray, black, order):
-                    return False
-                
-            order.append(course)
+
+            result.append(course)
+            # remove from gray set
             gray.remove(course)
+            # add to black set
             black.add(course)
+
             return True
 
-        # step 3 - start exploring from white
-        # add them to gray, and start exploring its children/prereq
-        # once done, remove it from gray, add it to black once fully explored
 
+        result = []
         while white:
             course = white.pop()
-            
             if course in black:
                 continue
-
-            if not dfs(course, gray, black, order):
+            if not dfs(course):
                 return []
 
-        return order
+        return result if len(result) == numCourses else []
 
+
+# Kahn algo - BFS - topological sort
+# time:O(V + E), space:O(V + E)
+class Solution:
+    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        indegree = [0] * numCourses
+
+        graph = {course:[] for course in range(numCourses)}
+        for dest, src in prerequisites:
+            graph[src].append(dest)
+            indegree[dest] += 1 #REMEMBER
+
+        # queue those who have no prereqs
+        q = deque()
+        for i in range(numCourses):
+            if indegree[i] == 0:
+                q.append(i)
+
+        # run bfs
+        completed = []
+        while q:
+            course = q.popleft()
+            completed.append(course)
+
+            for nei in graph[course]:
+                indegree[nei] -= 1
+
+                if indegree[nei] == 0:
+                    q.append(nei)
+
+        
+        if len(completed) == numCourses:
+            return completed
+        return []
