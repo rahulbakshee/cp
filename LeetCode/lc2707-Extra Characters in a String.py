@@ -1,27 +1,35 @@
-# recursion + memoization
-# time:O(2^n), space:O(n)
+# code is very similar to LIS-longest increasing subsequence
+# recursion - time:O(n*2^n + mk), space:O(n+ mk)
+# n-len of s, m-words in dictionary, k-avg len of word in dict
+# DP - memoization - time:O(n^3 + mk), space:O(n+mk)
+
 class Solution:
     def minExtraChar(self, s: str, dictionary: List[str]) -> int:
-        @cache
-        def dp(index):
-            # base case
-            if index >= len(s):
+
+        def dfs(i):
+            if i in memo:
+                return memo[i]
+
+            if i >= len(s):
+                memo[i] = 0
                 return 0
-            
-            missed = 1 + dp(index+1)
 
-            for word in dictionary:
-                if s[index:].startswith(word):
-                    missed = min(missed, dp(index+len(word)))
-            return missed
-        return dp(0)
+            result = 1 + dfs(i+1) # skip curr char
 
+            for j in range(i, len(s)):            # O(n)
+                if s[i:j+1] in dictionary_set:    # O(n)
+                    result = min(result, dfs(j+1))
+
+            memo[i] = result
+            return result
+
+        dictionary_set = set(dictionary)
+
+        memo = {}
+        return dfs(0)                             # O(n)
 
 # bottom up - tabulation
 # time:O(n^3), space:O(n+mk)
-# Let N be the total characters in the string.
-# Let M be the average length of the strings in dictionary.
-# Let K be the length of the dictionary.
 class Solution:
     def minExtraChar(self, s: str, dictionary: List[str]) -> int:
         dict_set = set(dictionary)
@@ -35,3 +43,69 @@ class Solution:
                     dp[start] = min(dp[start], dp[end+1])
 
         return dp[0]
+
+
+
+# using Trie - time:O(n^2+mk), space:O(n+mk)
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.endOfWord = False
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+    
+    def insert(self, word:str):
+        curr = self.root
+
+        for w in word:
+            if w not in curr.children:
+                curr.children[w] = TrieNode()
+            curr = curr.children[w]
+
+        curr.endOfWord = True
+
+    def search(self, word:str):
+        curr = self.root
+        for w in word:
+            if w not in curr.children:
+                return False
+            curr = curr.children[w]
+
+        return curr.endOfWord
+
+class Solution:
+    def minExtraChar(self, s: str, dictionary: List[str]) -> int:
+        trie = Trie()
+        for word in dictionary:
+            trie.insert(word)
+
+        
+        # defin DFS using Trie nodes for searching the prefixes from s
+        def dfs(i):
+            if i in memo:
+                return memo[i]
+
+            if i >= len(s):
+                memo[i] = 0
+                return 0
+
+            result = 1 + dfs(i+1)   # skip curr char
+
+            # use trie
+            curr = trie.root
+            for j in range(i, len(s)):
+                if s[j] not in curr.children:
+                    break
+                curr = curr.children[s[j]]
+
+                # check for end of word after loop ends
+                if curr.endOfWord:
+                    result = min(result, dfs(j+1))
+                
+            memo[i] = result
+            return result
+        
+        memo = {}
+        return dfs(0)
