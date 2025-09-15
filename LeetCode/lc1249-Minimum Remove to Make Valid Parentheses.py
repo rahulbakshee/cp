@@ -59,3 +59,39 @@ class Solution:
                     break
 
         return "".join(list_s)
+
+
+
+# neetcode
+
+class Solution:
+    def minRemoveToMakeValid(self, s: str) -> str:
+        result = []
+        balance = 0
+
+        # pass 1
+        for char in s:
+            if char == "(":
+                result.append(char)
+                balance += 1
+
+            elif char == ")":
+                if balance > 0:
+                    result.append(char)
+                    balance -= 1
+            else:
+                result.append(char)
+
+
+        # pass 2 - fron end to start
+        filtered = []
+        for char in result[::-1]:
+            if char == "(" and balance >0:
+                balance -= 1
+
+            else:
+                filtered.append(char)
+
+        return "".join(filtered[::-1])
+
+
