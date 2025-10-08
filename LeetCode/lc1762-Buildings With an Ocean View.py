@@ -1,16 +1,11 @@
-heights = [4,3,2,1]
+class Solution:
+    def findBuildings(self, heights: List[int]) -> List[int]:
+        max_right = -1
+        result = []
 
-def building(heights):
-	maxx = 0
-	result = []
-	for i in range(len(heights)-1, -1, -1):
-		if maxx > heights[i]:
-			continue
-		else: # maxx < heights[i]
-			result.append(i)
-			maxx = heights[i]
+        for i in range(len(heights)-1, -1, -1):
+            if heights[i] > max_right:
+                result.append(i)
+            max_right = max(max_right, heights[i])
 
-	return result[::-1]
-
-
-print(building(heights))
+        return result[::-1]
