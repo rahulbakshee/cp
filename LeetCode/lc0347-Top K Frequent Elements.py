@@ -1,37 +1,66 @@
-# time:O(nlogK)
-# space:O(n)
+# sorting - time:O(nlogn), space:O(n)
+from collections import Counter
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        # create num:freq mapping
-        counter = Counter(nums)
+        counter = Counter(nums) # {num:freq...}
 
-        # craete minHeap
+        num_freq = [[value, key] for key, value in counter.items()]
+
+        num_freq.sort()
+        
+        result = []
+        for i in range(len(num_freq)-1, -1, -1):
+            _, key  = num_freq[i]
+            result.append(key)
+
+            if len(result) == k:
+                return result
+
+
+
+# minHeap - time:O(nlognk), space:O(k)
+import heapq
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        counter = Counter(nums) # {key : freq}
+
         minHeap = []
-        for key, val in counter.items():
-            heapq.heappush(minHeap, (val, key))
+        # iterate over nums to puish into minHeap
+        for key, freq in counter.items():
+            heapq.heappush(minHeap, [freq, key])
+
             if len(minHeap) > k:
                 heapq.heappop(minHeap)
-
+        
+        # iterate over minHeap to prepare result of length k
         result = []
-        for val, key in minHeap:
+        while minHeap:
+            freq, key = heapq.heappop(minHeap)
             result.append(key)
 
         return result
 
-        
 
-# bucket sort - 
-# time-O(n), space-O(n)
+
+
+# buckets sort - time:O(n), space:O(n)
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        count = Counter(nums)
+        # min_occurance = 1
+        # max_occuranec = len(nums)
 
-        freq = [[] for i in range(len(nums)+1)]
-        for n, c in count.items():
-            freq[c].append(n)
+        # create a freq counter of nums
+        counter = Counter(nums)
+        # create a list of lists, where indexes are freq, value at index is num from nums
+        buckets = [[] for i in range(len(nums)+1)]
 
+        for key, value in counter.items():
+            buckets[value].append(key)
+
+        # iterate over bucktes to prepare result of len k
         result = []
-        for i in range(len(freq)-1, 0, -1):
-            result.extend(freq[i])
-            if len(result) >=k:
-                return result[:k]
+        for i in range(len(buckets)-1, -1, -1):
+            for val in buckets[i]:
+                result.append(val)
+                if len(result) == k:
+                    return result
