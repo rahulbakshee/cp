@@ -1,61 +1,45 @@
-# recursive DFS
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
+# recursive  - DFS - time:O(n), space:O(n)
 class Solution:
     def rangeSumBST(self, root: Optional[TreeNode], low: int, high: int) -> int:
         def dfs(node):
-            # base case
-            if not node:
-                return 0
+            nonlocal result
             
-            if node.val >= low and node.val <= high:
-                return node.val+ dfs(node.left) + dfs(node.right)
-            else:
-                return dfs(node.left) + dfs(node.right)
-
-        return dfs(root)
-
-# BST - recursive DFS-
-class Solution:
-    def rangeSumBST(self, root: Optional[TreeNode], low: int, high: int) -> int:
-        def dfs(node):
-            # base case
-            if not node:
-                return 0
-            
-            if node.val > high:
-                return dfs(node.left)
-            if node.val < low:
-                return dfs(node.right)
-            if node.val >= low and node.val <= high:
-                return node.val + dfs(node.left) + dfs(node.right)
-        return dfs(root)
-
-
-# time:O(n), space:O(logn for binary tree or n  for unbalanced tree in worst case)
-# BST - iterative - BFS
-class Solution:
-    def rangeSumBST(self, root: Optional[TreeNode], low: int, high: int) -> int:
-        result = 0
-        if not root:
-            return result
-        
-        # BFS using queue
-        from collections import deque
-        q = deque([root])
-
-        while q:
-            node = q.popleft()
             if node:
                 if low <= node.val <= high:
                     result += node.val
+
                 if node.val > low:
-                    q.append(node.left)
+                    dfs(node.left)
                 if node.val < high:
-                    q.append(node.right)
-                
+                    dfs(node.right)
+                    
+        if not root:
+            return 0
+        result = 0
+        dfs(root)    
+        return result
+
+
+
+# iterative  - DFS - time:O(n), space:O(n)
+class Solution:
+    def rangeSumBST(self, root: Optional[TreeNode], low: int, high: int) -> int:
+        if not root:
+            return 0
+
+        result = 0
+
+        stack = [root]
+        while stack:
+            node = stack.pop()
+
+            if node:
+                if low <= node.val <= high:
+                    result += node.val
+
+                if node.val > low:
+                    stack.append(node.left)
+
+                if node.val < high:
+                    stack.append(node.right)
         return result
