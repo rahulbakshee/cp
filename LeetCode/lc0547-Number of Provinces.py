@@ -98,3 +98,45 @@ class Solution:
                 components += 1
 
         return components
+
+class UnionFind:
+    def __init__(self, n:int):
+        self.parent = [i for i in range(n)]
+        self.size = [1] * n
+
+    def find(self, x:int):
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])
+
+        return self.parent[x]
+
+    def union(self, x, y):
+        px = self.find(x)
+        py = self.find(y)
+
+        if px == py:
+            return False
+        
+        if self.size[px] > self.size[py]:
+            self.parent[py] = px
+            self.size[px] += self.size[py]
+        else:
+            self.parent[px] = py
+            self.size[py] += self.size[px]
+
+        return True
+
+class Solution:
+    def findCircleNum(self, isConnected: List[List[int]]) -> int:
+        n = len(isConnected)
+        uf = UnionFind(n)
+        num_components = n
+
+        for i in range(n):
+            for j in range(n):
+                if isConnected[i][j]:
+                    if uf.union(i,j):
+                        num_components -= 1
+
+
+        return num_components
