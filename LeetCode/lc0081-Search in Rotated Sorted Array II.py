@@ -1,0 +1,27 @@
+# best case time:O(logn), worst case - linear scan - O(n)
+class Solution:
+    def search(self, nums: List[int], target: int) -> bool:
+        left, right = 0, len(nums)-1
+        while left <= right:
+            mid = left + (right-left)//2
+
+            if nums[mid] == target:
+                return True
+            
+            # left portion is sorted
+            if nums[left] < nums[mid]:
+                if nums[left] <= target < nums[mid]:
+                    right = mid - 1
+                else:
+                    left = mid + 1
+
+            elif nums[left] > nums[mid]:
+                if nums[mid] < target <= nums[right]:
+                    left = mid + 1
+                else:
+                    right = mid - 1
+            
+            else: # linear scan
+                left += 1
+
+        return False
