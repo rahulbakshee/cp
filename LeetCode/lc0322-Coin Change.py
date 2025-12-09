@@ -2,25 +2,23 @@
 # time:O(n^m), space:O(m), n-len of coins, m=amount
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        @cache
-        def dp(curr_amount):
-            if curr_amount  == 0:
+        def dfs(curr):
+            if curr == 0:
                 return 0
-            if curr_amount < 0:
-                return -1
 
-            required = float("inf")
+            if curr < 0:
+                return amount+1
+
+            required_coins = amount + 1
             for coin in coins:
-                remaining = curr_amount - coin
-                coins_used = dp(remaining)
-                if coins_used != -1:
-                    required = min(required, coins_used + 1)
+                required_coins = min(required_coins, 1+dfs(curr - coin))
+
+            return required_coins
 
 
-            return required
+        result = dfs(amount)
+        return -1 if result == amount+1 else result
 
-        result = dp(amount)
-        return result if result != float("inf") else -1
 
 
 
@@ -28,37 +26,37 @@ class Solution:
 # time:O(nm), space:O(m), n-len of coins, m=amount
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        @cache
-        def dp(curr_amount):
-            if curr_amount  == 0:
-                return 0
-            if curr_amount < 0:
-                return -1
+        def dfs(curr):
+            if curr in memo:
+                return memo[curr]
 
-            required = float("inf")
+            if curr < 0:
+                return amount+1
+
+            required_coins = amount + 1
             for coin in coins:
-                remaining = curr_amount - coin
-                coins_used = dp(remaining)
-                if coins_used != -1:
-                    required = min(required, coins_used + 1)
+                required_coins = min(required_coins, 1+dfs(curr - coin))
+
+            memo[curr] = required_coins
+            return memo[curr]
 
 
-            return required
+        memo = {0:0}
+        result = dfs(amount)
+        return -1 if result == amount+1 else result
 
-        result = dp(amount)
-        return result if result != float("inf") else -1
 
 
 # tabulation
 # time:O(nm), space:O(m) -n-len of coins, m=amount
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        dp = [float("inf")] * (amount+1)
+        dp = [amount+1] * (amount+1)
         dp[0] = 0
 
-        for i in range(1, len(dp)):
+        for i in range(1, amount+1):
             for coin in coins:
-                if i-coin>=0:
-                    dp[i] = min(dp[i], 1+dp[i-coin])
+                if i - coin >= 0:
+                    dp[i] = min(dp[i] , 1+dp[i-coin])
 
-        return dp[-1] if dp[-1] != float("inf") else -1
+        return dp[amount] if dp[amount] != amount+1 else -1
