@@ -4,58 +4,58 @@
 # time-O(2**n), space-O(1)
 class Solution:
     def climbStairs(self, n: int) -> int:
-        def dfs(index):
-            if index > n:
-                return 0
-
-            if index == n:
+        def dfs(i):
+            if i == 1:
                 return 1
 
-            return dfs(index+1) + dfs(index+2)
+            if i == 2:
+                return 2
 
-        return dfs(0)
+            return dfs(i-1) + dfs(i-2)
+        return dfs(n)
+
 
 # memoization
 # time-O(n), space-O(n)
 class Solution:
     def climbStairs(self, n: int) -> int:
-        def helper(n, memo):
-            # base case
-            if n == 1:
-                return 1
-            if n == 2:
-                return 2
+        def dfs(i):
+            if i in memo:
+                return memo[i]
+                
+            memo[i] = dfs(i-1) + dfs(i-2)
+            return memo[i]
 
-            if n in memo:
-                return memo[n]
-            
-            memo[n] = helper(n-1, memo) + helper(n-2, memo)
-            return memo[n]
-
-        return helper(n, dict())
+        memo = {1:1, 2:2}
+        return dfs(n)
 
 # bottom up/Tabulation
 # time-O(n), space-O(n)
 class Solution:
     def climbStairs(self, n: int) -> int:
-        if n==1 or n==2:
+        if n ==1 or n== 2:
             return n
-        bottom_up = [None] * (n+1)
-        bottom_up[1] = 1
-        bottom_up[2] = 2
 
-        for i in range(3, n+1):
-            bottom_up[i] = bottom_up[i-1] + bottom_up[i-2]
-        return bottom_up[n]
+        dp = [0] * n
+        dp[0] = 1
+        dp[1] = 2
+
+        for i in range(2, n):
+            dp[i] = dp[i-1] + dp[i-2]
+
+        return dp[-1]
 
 # Space Optimization
 # time-O(n), space-O(1)
 class Solution:
     def climbStairs(self, n: int) -> int:
-        if n==1 or n==2:
+        if n ==1 or n== 2:
             return n
-        
-        prev, curr = 1 , 2
-        for i in range(3, n+1):
-            curr, prev = prev+curr, curr
+
+        prev = 1
+        curr = 2
+
+        for i in range(2, n):
+            prev, curr = curr, prev + curr
+
         return curr
