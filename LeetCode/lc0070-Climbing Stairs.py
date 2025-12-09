@@ -4,12 +4,16 @@
 # time-O(2**n), space-O(1)
 class Solution:
     def climbStairs(self, n: int) -> int:
-        if n == 1 or n==2:
-            return n
+        def dfs(index):
+            if index > n:
+                return 0
 
-        result = self.climbStairs(n-2)+self.climbStairs(n-1)
-        return result
+            if index == n:
+                return 1
 
+            return dfs(index+1) + dfs(index+2)
+
+        return dfs(0)
 
 # memoization
 # time-O(n), space-O(n)
