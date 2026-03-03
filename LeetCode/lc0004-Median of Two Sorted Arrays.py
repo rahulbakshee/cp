@@ -13,7 +13,7 @@ class Solution:
             return nums1[total_len//2]  
 
 
-# copied from neetcode
+# neetcode
 # using binary search
 # time:O(log(min(m, n)))
 class Solution:
